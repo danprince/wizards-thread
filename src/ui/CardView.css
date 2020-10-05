@@ -6,19 +6,39 @@
   background: white;
   box-sizing: border-box;
   padding: 4px;
-  transition-property: box-shadow;
+  transition-property: box-shadow transform;
+  position: relative;
 }
 
 .card-view-glowing {
-  animation: 1s linear infinite card-view-glowing;
+  animation: 1s infinite card-view-glowing;
 }
 
 @keyframes card-view-glowing {
-  from {
-    box-shadow: 0 0 0 8px #007bff21;
+  0% {
+    box-shadow: 0 0 0 1px #007bff21;
   }
 
-  to {
-    box-shadow: 0 0 0 2px #007bff55;
+  50% {
+    box-shadow: 0 0 0 6px #007bff55;
   }
+
+  100% {
+    box-shadow: 0 0 0 1px #007bff55;
+  }
+}
+
+.card-view-mana-orb {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  background: white;
+  border: solid 1px black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, 20%);
 }

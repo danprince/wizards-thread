@@ -1,5 +1,6 @@
 import "./Encounter.css";
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
+import { classNames } from "./utils";
 import { CastSpellAction } from "../actions";
 import { Game, Card, State } from "../game";
 import { useGameWithUpdates } from "./Context";
@@ -9,21 +10,41 @@ type EncounterState = {
   hand: Card[],
   spell: Card[],
   activeCard: Card,
+  intentIndex: number,
 }
 
 type EncounterActions =
+  | { type: "SET_CARDS", cards: Card[] }
+  | { type: "RESET_SPELL" }
   | { type: "SET_ACTIVE_CARD", card: Card }
+  | { type: "SET_INTENT_SLOT", index: number }
   | { type: "INSERT_CARD", index: number }
   | { type: "REMOVE_CARD", index: number }
 
 function EncounterReducer(state: EncounterState, action: EncounterActions): EncounterState {
   switch (action.type) {
+    case "SET_CARDS": {
+      let cards: Card[] = Array.from({ length: 5 });
+      Object.assign(cards, action.cards);
+      return { ...state, spell: cards };
+    }
+
+    case "RESET_SPELL": {
+      let spell: Card[] = Array.from({ length: 5 });
+      let hand = [...state.hand, ...state.spell].filter(c => c);
+      return { ...state, spell, hand };
+    }
+
     case "SET_ACTIVE_CARD": {
       if (state.activeCard === action.card) {
         return { ...state, activeCard: null };
       } else {
         return { ...state, activeCard: action.card };
       }
+    }
+
+    case "SET_INTENT_SLOT": {
+      return { ...state, intentIndex: action.index };
     }
 
     case "INSERT_CARD": {
@@ -50,6 +71,7 @@ function initState(game: Game): EncounterState {
     hand: game.deck,
     spell: Array.from({ length: 5 }),
     activeCard: null,
+    intentIndex: -1,
   };
 }
 
@@ -57,6 +79,10 @@ export function EncounterScreen() {
   let game = useGameWithUpdates();
 
   let [state, dispatch] = useReducer(EncounterReducer, game, initState);
+
+  useEffect(() => {
+    dispatch({ type: "SET_CARDS", cards: game.spell.cards });
+  }, [game.spell.cards]);
 
   function cast() {
     // TODO: Indexes won't match when removing slots
@@ -80,6 +106,18 @@ export function EncounterScreen() {
     }
   }
 
+  function setIntentSlot(index: number) {
+    if (game.state === State.Drafting) {
+      dispatch({ type: "SET_INTENT_SLOT", index });
+    }
+  }
+
+  function reset() {
+    if (game.state === State.Drafting) {
+      dispatch({ type: "RESET_SPELL" });
+    }
+  }
+
   function isActiveCard(card: Card) {
     return game.state === State.Drafting && card === state.activeCard;
   }
@@ -88,29 +126,51 @@ export function EncounterScreen() {
     return game.state === State.Casting && card === game.spell.getCurrentCard();
   }
 
+  let hasCards = state.spell.filter(c => c).length > 0;
+  let isDrafting = game.state === State.Drafting;
+
   return (
     <div className="encounter">
-      <strong>Player</strong>
-      <pre>Mana: {game.player.mana} Health: {game.player.health} Might: {game.player.might}</pre>
-
-      <strong>Monster</strong>
-      <pre>Health: {game.monster.health}</pre>
+      <div className="encounter-battlefield" style={{ display: "flex" }}>
+        State: {game.state}
+        <div>
+          <h4>Player</h4>
+          <div>Mana: {game.player.mana}/{game.player.baseMana}</div>
+          <div>Health: {game.player.health}/{game.player.maxHealth}</div>
+          <div>Might: {game.player.might}</div>
+        </div>
+        <div>
+          <h4>Monster</h4>
+          <div>Health: {game.monster.health}/{game.monster.maxHealth}</div>
+          <div>Attack: {game.monster.attackDamage}</div>
+        </div>
+      </div>
 
       <h3>Spell</h3>
-      <button disabled={game.state !== State.Drafting} onClick={cast}>Cast</button>
+      <button disabled={!isDrafting || !hasCards} onClick={cast}>Cast</button>
+      <button disabled={!isDrafting || !hasCards} onClick={reset}>Clear</button>
 
       <SpellBuilder>
         {state.spell.map((card, index) => (
-          <SpellBuilderSlot
+          <div
             key={index}
+            className="spell-builder-slot"
             onClick={() => toggleSpellSlot(index)}
+            onMouseEnter={() => setIntentSlot(index)}
+            onMouseLeave={() => setIntentSlot(-1)}
           >
             {card ? (
               <CardView card={card} glowing={isCurrentCard(card)}/>
             ) : (
-              <SpellBuilderSlotEmpty />
+              <SpellBuilderSlotEmpty glowing={game.state === State.Drafting && state.activeCard}>
+                {index === state.intentIndex && state.activeCard && (
+                  <div style={{opacity: 0.5}}>
+                    <CardView card={state.activeCard} />
+                  </div>
+                )}
+              </SpellBuilderSlotEmpty>
             )}
-          </SpellBuilderSlot>
+          </div>
         ))}
       </SpellBuilder>
 
@@ -161,10 +221,15 @@ export function SpellBuilderSlot({ children, onClick }) {
   );
 }
 
-export function SpellBuilderSlotEmpty({}) {
+export function SpellBuilderSlotEmpty({ glowing, children = null }) {
   return (
-    <div className="spell-builder-slot-empty">
-    </div>
+    <div
+      className={classNames({
+        "spell-builder-slot-empty": true,
+        "spell-builder-slot-glowing": glowing
+      })}
+      children={children}
+    />
   );
 }
 

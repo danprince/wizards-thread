@@ -12,6 +12,7 @@ export function CardView({ card, glowing }: CardViewProps) {
     <div className={`card-view ${glowing ? "card-view-glowing" : ""}`}>
       <strong>{card.name}</strong>
       <div>{card.description}</div>
+      <div className="card-view-mana-orb">{card.cost}</div>
     </div>
   );
 }

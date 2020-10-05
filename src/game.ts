@@ -86,6 +86,7 @@ export class Game {
 export class Spell {
   cards: Card[] = [];
   cursor: number = 0;
+  previousCardPlayed: Card = null;
 
   getCurrentCard(): Card {
     return this.cards[this.cursor];

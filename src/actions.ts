@@ -101,6 +101,7 @@ export class PlayCardAction extends Action {
     console.groupCollapsed(`%cPLAY%c ${this.card.name}`, "color: blue; background: lightcyan; font-weight: bold", "font-weight: bold");
     console.log(this.card);
     this.card.play(game);
+    game.spell.previousCardPlayed = this.card;
     console.groupEnd();
   }
 }

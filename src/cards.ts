@@ -8,7 +8,7 @@ import {
   JumpToCardAction,
   ModifyManaAction,
   MultiplyMightAction,
-  ShuffleSpellAction
+  ShuffleSpellAction,
   LoopAction,
   PlayCardAction,
 } from "./actions";
@@ -183,7 +183,7 @@ export class Again extends Card {
   cost = 1;
 
   play(game: Game) {
-    // TODO:
+    game.addActionTop(new PlayCardAction(game.spell.previousCardPlayed));
   }
 }
 

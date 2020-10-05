@@ -1,5 +1,5 @@
 import { Game } from "./game";
-import { Remedy, Bolt, Augment, Burst, Hypothesis, Propel, Antithesis, Synthesis, Justify, Mystify, Purify, Amplify, Siphon, Again, Supernova, Salvation, Awaken, Obstacle, Fatigue, Confusion, Wormhole } from "./cards";
+import { Remedy, Bolt, Augment, Burst, Hypothesis, Propel, Antithesis, Synthesis, Justify, Mystify, Purify, Amplify, Siphon, Again, Supernova, Salvation, Awaken, Obstacle, Fatigue, Confusion, Wormhole, Loop, End } from "./cards";
 import { init } from "./ui";
 
 let game = new Game();
@@ -28,6 +28,8 @@ game.deck = [
   new Fatigue,
   new Confusion,
   new Wormhole,
+  new Loop,
+  new End,
 ];
 
 game.spell.cards = [];

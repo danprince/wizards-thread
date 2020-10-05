@@ -9,6 +9,8 @@ import {
   ModifyManaAction,
   MultiplyMightAction,
   ShuffleSpellAction
+  LoopAction,
+  PlayCardAction,
 } from "./actions";
 
 export class Remedy extends Card {
@@ -260,5 +262,25 @@ export class Wormhole extends Card {
   play(game: Game) {
     let cursor = Math.floor(Math.random() * game.spell.cards.length);
     game.addActionTop(new JumpToCardAction(cursor));
+  }
+}
+
+export class Loop extends Card {
+  id = "loop";
+  name = "Loop";
+  description = "Start a loop";
+  cost = 0;
+
+  play() {}
+}
+
+export class End extends Card {
+  id = "end"
+  name = "End"
+  description = "Return to the previous loop card"
+  cost = 1
+
+  play(game: Game) {
+    game.addActionTop(new LoopAction());
   }
 }

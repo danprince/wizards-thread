@@ -199,3 +199,16 @@ export class ShuffleSpellAction extends Action {
     game.spell.shuffle();
   }
 }
+
+export class LoopAction extends Action {
+  update(game: Game) {
+    for (let cursor = game.spell.cursor; cursor >= 0; cursor--) {
+      let card = game.spell.cards[cursor];
+
+      if (card && card.id === "loop") {
+        game.addActionTop(new JumpToCardAction(cursor));
+        break;
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ export enum State {
 
 export class Game {
   player = new Player();
-  monster = new Monster();
+  monster: Monster;
   spell = new Spell();
   deck: Card[] = [];
   state: State = State.Drafting;
@@ -195,8 +195,9 @@ export class Player extends Creature {
 }
 
 export abstract class Monster extends Creature {
-  health = 20;
-  maxHealth = 20;
+  abstract health = 20;
+  abstract maxHealth = 20;
+  abstract attackDamage: number;
 
   abstract update(game: Game): any;
 }

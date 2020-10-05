@@ -228,8 +228,7 @@ export class Obstacle extends Card {
   description = "The spell ends here";
   cost = 99;
 
-  play(game: Game) {
-  }
+  play() {}
 }
 
 export class Fatigue extends Card {
@@ -238,8 +237,7 @@ export class Fatigue extends Card {
   description = "Nothing happens";
   cost = 1;
 
-  play(game: Game) {
-  }
+  play() {}
 }
 
 export class Confusion extends Card {

@@ -76,7 +76,9 @@ export class Propel extends Card {
   cost = 1;
 
   play(game: Game) {
-    game.addActionTop(new JumpToCardAction(game.player.might));
+    if (game.player.might > 0) {
+      game.addActionTop(new JumpToCardAction(game.player.might));
+    }
   }
 }
 

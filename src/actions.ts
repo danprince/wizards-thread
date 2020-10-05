@@ -38,9 +38,9 @@ export class CastSpellAction extends Action {
   static allowedStates = [State.Drafting];
 
   update(game: Game) {
-    game.transition(State.Casting);
     game.player.resetMana();
     game.spell.reset();
+    game.addActionBottom(new TransitionAction(State.Casting));
     game.addActionBottom(new WaitAction(500));
     game.addActionBottom(new PlayNextCardAction());
   }
@@ -50,8 +50,27 @@ export class EndSpellAction extends Action {
   static allowedStates = [State.Casting];
 
   update(game: Game) {
-    game.transition(State.Drafting);
     game.clearActions();
+    game.addActionBottom(new TransitionAction(State.Reacting));
+    game.addActionBottom(new MonsterTakeTurnAction());
+  }
+}
+
+export class MonsterTakeTurnAction extends Action {
+  update(game: Game) {
+    game.monster.update(game);
+    game.addActionBottom(new WaitAction(800));
+    game.addActionBottom(new TransitionAction(State.Drafting));
+  }
+}
+
+export class TransitionAction extends Action {
+  constructor(public state: State) {
+    super();
+  }
+
+  update(game: Game) {
+    game.transition(this.state);
   }
 }
 

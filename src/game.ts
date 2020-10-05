@@ -56,22 +56,11 @@ export class Game {
     let action = this.actions.shift();
 
     if (action.allowedStates && !action.allowedStates.includes(this.state)) {
-      console.warn(`%cIGNORED%c ${action.type}%c not allowed in %c${this.state}%c state!`,
-        "color: red; background: mistyrose; font-weight: bold",
-        "font-weight: bold",
-        "",
-        "font-weight: bold",
-        "",
-        action
-      );
+      console.warn(`%cIGNORED%c ${action.type}%c not allowed in %c${this.state}%c state!`, "color: red; background: mistyrose; font-weight: bold", "font-weight: bold", "", "font-weight: bold", "", action);
       return;
     }
 
-    console.debug(
-      `%cACTION`,
-      "color: green; background: lightgreen; font-weight: bold",
-      action
-    );
+    console.debug(`%cACTION`, "color: green; background: lightgreen; font-weight: bold", action);
 
     await action.update(this);
 

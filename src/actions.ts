@@ -41,6 +41,7 @@ export class CastSpellAction extends Action {
     game.transition(State.Casting);
     game.player.setMana(3);
     game.spell.reset();
+    game.addActionBottom(new WaitAction(500));
     game.addActionBottom(new PlayNextCardAction());
   }
 }
@@ -67,6 +68,7 @@ export class PlayNextCardAction extends Action {
 
     // Check whether the player can afford to cast this
     if (!game.player.hasMana(card.cost)) {
+      console.groupCollapsed(`%cNOT ENOUGH MANA`, "color: orangered; background: pink; font-weight: bold");
       game.addActionBottom(new EndSpellAction());
       return;
     }
@@ -81,7 +83,7 @@ export class PlayNextCardAction extends Action {
     game.addActionBottom(new PlayCardAction(card));
 
     // Pause before moving to the next card
-    game.addActionBottom(new WaitAction(500));
+    game.addActionBottom(new WaitAction(800));
 
     // Play the next card
     game.addActionBottom(new PlayNextCardAction);

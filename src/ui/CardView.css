@@ -1,0 +1,24 @@
+.card-view {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-border-radius);
+  border: solid 1px black;
+  background: white;
+  box-sizing: border-box;
+  padding: 4px;
+  transition-property: box-shadow;
+}
+
+.card-view-glowing {
+  animation: 1s linear infinite card-view-glowing;
+}
+
+@keyframes card-view-glowing {
+  from {
+    box-shadow: 0 0 0 8px #007bff21;
+  }
+
+  to {
+    box-shadow: 0 0 0 2px #007bff55;
+  }
+}

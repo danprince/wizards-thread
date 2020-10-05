@@ -1,0 +1,27 @@
+.spell-builder {
+  display: flex;
+}
+
+.spell-builder-slot {
+  margin: 10px;
+}
+
+.hand {
+  display: flex;
+}
+
+.hand-slot {
+  margin-right: -10px;
+}
+
+.hand-slot:hover {
+  z-index: 20;
+}
+
+.spell-builder-slot-empty {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-border-radius);
+  border: dashed 1px grey;
+  box-sizing: border-box;
+}

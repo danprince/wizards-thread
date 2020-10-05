@@ -1,29 +1,28 @@
+import "./index.css";
 import React from "react";
 import { render } from "react-dom";
-import { Game } from "../game";
+import { Game, State } from "../game";
 import { GameProvider, useGameWithUpdates } from "./Context";
-import { CastSpellAction } from "../actions";
+import { EncounterScreen } from "./Encounter";
+
+function App() {
+  let game = useGameWithUpdates();
+
+  switch (game.state) {
+    case State.Drafting:
+    case State.Casting:
+    case State.Reacting:
+      return <EncounterScreen />;
+    default:
+      return null;
+  }
+}
 
 function Root({ game }: { game: Game }) {
   return (
     <GameProvider value={game}>
       <App />
     </GameProvider>
-  );
-}
-
-function App() {
-  let game = useGameWithUpdates();
-
-  let startCasting = () => {
-    game.addActionTop(new CastSpellAction());
-  }
-
-  return (
-    <div>
-      <button onClick={startCasting}>Cast</button>
-      <pre>{JSON.stringify(game, null, 2)}</pre>
-    </div>
   );
 }
 

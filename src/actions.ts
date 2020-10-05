@@ -46,24 +46,6 @@ export class CastSpellAction extends Action {
   }
 }
 
-export class EndSpellAction extends Action {
-  static allowedStates = [State.Casting];
-
-  update(game: Game) {
-    game.clearActions();
-    game.addActionBottom(new TransitionAction(State.Reacting));
-    game.addActionBottom(new MonsterTakeTurnAction());
-  }
-}
-
-export class MonsterTakeTurnAction extends Action {
-  update(game: Game) {
-    game.monster.update(game);
-    game.addActionBottom(new WaitAction(800));
-    game.addActionBottom(new TransitionAction(State.Drafting));
-  }
-}
-
 export class TransitionAction extends Action {
   constructor(public state: State) {
     super();
@@ -74,12 +56,29 @@ export class TransitionAction extends Action {
   }
 }
 
+export class StartTurnAction extends Action {
+  update(game: Game) {
+    game.addActionBottom(new TransitionAction(State.Drafting));
+  }
+}
+
+export class EndTurnAction extends Action {
+  update(game: Game) {
+    game.clearActions();
+    game.addActionBottom(new TransitionAction(State.Reacting));
+    game.addActionBottom(new WaitAction(800));
+    game.monster.update(game);
+    game.addActionBottom(new WaitAction(800));
+    game.addActionBottom(new StartTurnAction());
+  }
+}
+
 export class PlayNextCardAction extends Action {
   static allowedStates = [State.Casting];
 
   update(game: Game) {
     if (game.spell.isFinished()) {
-      game.addActionBottom(new EndSpellAction());
+      game.addActionBottom(new EndTurnAction());
       return;
     }
 
@@ -88,7 +87,7 @@ export class PlayNextCardAction extends Action {
     // Check whether the player can afford to cast this
     if (!game.player.hasMana(card.cost)) {
       console.log(`%cNOT ENOUGH MANA`, "color: orangered; background: pink; font-weight: bold");
-      game.addActionBottom(new EndSpellAction());
+      game.addActionBottom(new EndTurnAction());
       return;
     }
 

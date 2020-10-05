@@ -1,3 +1,5 @@
+import { RNG } from "silmarils";
+
 export enum State {
   Drafting = "Drafting",
   Casting = "Casting",
@@ -96,6 +98,18 @@ export class Spell {
   reset() {
     this.cursor = 0;
   }
+
+  shuffle() {
+    let cards: Card[] = [];
+
+    for (let i = 0; i < this.cards.length; i++) {
+      let j = Math.floor(Math.random() * this.cards.length);
+      cards[i] = this.cards[j];
+      cards[j] = this.cards[i];
+    }
+
+    this.cards = cards;
+  }
 }
 
 export abstract class Card {
@@ -131,13 +145,14 @@ export abstract class Action {
 
 export class Creature {
   health: number;
+  maxHealth = 10;
 
   modifyHealth(amount: number) {
     this.setHealth(this.health + amount);
   }
 
   setHealth(health: number) {
-    this.health = health;
+    this.health = Math.max(0, Math.min(health, this.maxHealth));
   }
 
   damage(amount: number) {
@@ -147,11 +162,18 @@ export class Creature {
 
 export class Player extends Creature {
   health = 10;
-  mana: number = 3;
-  might: number = 0;
+
+  baseMana = 10;
+  mana = this.baseMana;
+
+  might = 0;
 
   modifyMana(amount: number) {
     this.mana += amount;
+  }
+
+  resetMana() {
+    this.mana = this.baseMana;
   }
 
   setMana(mana: number) {
@@ -173,4 +195,5 @@ export class Player extends Creature {
 
 export class Monster extends Creature {
   health = 20;
+  maxHealth = 20;
 }

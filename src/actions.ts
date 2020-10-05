@@ -39,7 +39,7 @@ export class CastSpellAction extends Action {
 
   update(game: Game) {
     game.transition(State.Casting);
-    game.player.setMana(3);
+    game.player.resetMana();
     game.spell.reset();
     game.addActionBottom(new WaitAction(500));
     game.addActionBottom(new PlayNextCardAction());
@@ -68,7 +68,7 @@ export class PlayNextCardAction extends Action {
 
     // Check whether the player can afford to cast this
     if (!game.player.hasMana(card.cost)) {
-      console.groupCollapsed(`%cNOT ENOUGH MANA`, "color: orangered; background: pink; font-weight: bold");
+      console.log(`%cNOT ENOUGH MANA`, "color: orangered; background: pink; font-weight: bold");
       game.addActionBottom(new EndSpellAction());
       return;
     }
@@ -147,6 +147,17 @@ export class ModifyMightAction extends Action {
   }
 }
 
+export class MultiplyMightAction extends Action {
+  constructor(public factor: number) {
+    super();
+  }
+
+  update(game: Game) {
+    game.player.setMight(game.player.might * this.factor);
+  }
+}
+
+
 export class SetHealthAction extends Action {
   constructor(public target: Creature, public amount: number) {
     super();
@@ -180,5 +191,11 @@ export class SetMightAction extends Action {
 export class ResetMightAction extends Action {
   update(game: Game) {
     game.player.setMight(0);
+  }
+}
+
+export class ShuffleSpellAction extends Action {
+  update(game: Game) {
+    game.spell.shuffle();
   }
 }

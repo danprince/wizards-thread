@@ -42,3 +42,13 @@
   justify-content: center;
   transform: translate(-50%, 20%);
 }
+
+.card-view-hex {
+  background: black;
+  color: white;
+}
+
+.card-view-hex .card-view-mana-orb {
+  background: red;
+  color: black;
+}

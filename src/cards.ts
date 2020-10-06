@@ -1,4 +1,4 @@
-import { Game, Card } from "./game";
+import { Game, Card, CardType } from "./game";
 
 import {
   HealAction,
@@ -229,6 +229,7 @@ export class Obstacle extends Card {
   name = "Obstacle";
   description = "The spell ends here";
   cost = 99;
+  type = CardType.Hex;
 
   play() {}
 }
@@ -238,6 +239,7 @@ export class Fatigue extends Card {
   name = "Fatigue";
   description = "Nothing happens";
   cost = 1;
+  type = CardType.Hex;
 
   play() {}
 }
@@ -247,6 +249,7 @@ export class Confusion extends Card {
   name = "Confusion";
   description = "Shuffle the spell and continue";
   cost = 0;
+  type = CardType.Hex;
 
   play(game: Game) {
     game.addActionTop(new ShuffleSpellAction());
@@ -258,6 +261,7 @@ export class Wormhole extends Card {
   name = "Wormhole";
   description = "Continue the spell from a random card";
   cost = 1;
+  type = CardType.Hex;
 
   play(game: Game) {
     let cursor = Math.floor(Math.random() * game.spell.cards.length);

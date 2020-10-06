@@ -113,6 +113,11 @@ export class Spell {
   }
 }
 
+export enum CardType {
+  Normal = "normal",
+  Hex = "hex",
+}
+
 export abstract class Card {
   abstract id: string;
   abstract name: string;
@@ -120,10 +125,10 @@ export abstract class Card {
   abstract cost: number;
 
   uid: number;
+  type = CardType.Normal;
 
   constructor() {
     this.uid = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-
   }
 
   abstract play(game: Game): any

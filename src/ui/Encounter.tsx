@@ -85,8 +85,7 @@ export function EncounterScreen() {
   }, [game.spell.cards]);
 
   function cast() {
-    game.spell.cards = state.spell;
-    game.addActionTop(new CastSpellAction());
+    game.addActionTop(new CastSpellAction(state.spell));
   }
 
   function endTurn() {
@@ -94,18 +93,24 @@ export function EncounterScreen() {
   }
 
   function toggleSpellSlot(index: number) {
+    let card = state.spell[index];
+
     if (game.state === State.Drafting) {
-      if (state.spell[index]) {
+      if (card) {
         dispatch({ type: "REMOVE_CARD", index });
       } else if (state.activeCard) {
-        dispatch({ type: "INSERT_CARD", index });
+        if (!state.activeCard.anchored || state.activeCard.anchorIndex === index) {
+          dispatch({ type: "INSERT_CARD", index });
+        }
       }
     }
   }
 
   function setActiveCard(card: Card) {
     if (game.state === State.Drafting) {
-      dispatch({ type: "SET_ACTIVE_CARD", card });
+      if (!(state.activeCard && state.activeCard.forced)) {
+        dispatch({ type: "SET_ACTIVE_CARD", card });
+      }
     }
   }
 
@@ -132,6 +137,7 @@ export function EncounterScreen() {
   let hasCards = state.spell.filter(c => c).length > 0;
   let isDrafting = game.state === State.Drafting;
   let isCasting = game.state === State.Casting;
+  let isReacting = game.state === State.Reacting;
 
   return (
     <div className="encounter">
@@ -153,7 +159,7 @@ export function EncounterScreen() {
       <h3>Spell</h3>
       <button disabled={!isDrafting || !hasCards} onClick={cast}>Cast</button>
       <button disabled={!isDrafting || !hasCards} onClick={reset}>Clear</button>
-      <button disabled={!isCasting} onClick={endTurn}>End Turn</button>
+      <button disabled={isReacting} onClick={endTurn}>End Turn</button>
 
       <SpellBuilder>
         {state.spell.map((card, index) => (
@@ -167,8 +173,12 @@ export function EncounterScreen() {
             {card ? (
               <CardView card={card} glowing={isCurrentCard(card)}/>
             ) : (
-              <SpellBuilderSlotEmpty glowing={game.state === State.Drafting && state.activeCard}>
-                {index === state.intentIndex && state.activeCard && (
+              <SpellBuilderSlotEmpty glowing={game.state === State.Drafting && state.activeCard && (state.activeCard.anchorIndex === undefined || state.activeCard.anchorIndex === index)}>
+                {(
+                  index === state.intentIndex &&
+                  state.activeCard &&
+                  (state.activeCard.anchorIndex === undefined || state.activeCard.anchorIndex === index)
+                ) && (
                   <div style={{opacity: 0.5}}>
                     <CardView card={state.activeCard} />
                   </div>

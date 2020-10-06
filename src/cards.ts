@@ -230,6 +230,8 @@ export class Obstacle extends Card {
   description = "The spell ends here";
   cost = 99;
   type = CardType.Hex;
+  anchored = true;
+  anchorIndex = 3;
 
   play() {}
 }
@@ -240,6 +242,7 @@ export class Fatigue extends Card {
   description = "Nothing happens";
   cost = 1;
   type = CardType.Hex;
+  forced = true;
 
   play() {}
 }
@@ -250,6 +253,7 @@ export class Confusion extends Card {
   description = "Shuffle the spell and continue";
   cost = 0;
   type = CardType.Hex;
+  forced = true;
 
   play(game: Game) {
     game.addActionTop(new ShuffleSpellAction());
@@ -262,6 +266,7 @@ export class Wormhole extends Card {
   description = "Continue the spell from a random card";
   cost = 1;
   type = CardType.Hex;
+  forced = true;
 
   play(game: Game) {
     let cursor = Math.floor(Math.random() * game.spell.cards.length);

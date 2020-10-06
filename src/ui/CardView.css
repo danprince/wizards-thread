@@ -8,6 +8,8 @@
   padding: 4px;
   transition-property: box-shadow transform;
   position: relative;
+  text-align: center;
+  --card-glow-color: black;
 }
 
 .card-view-glowing {
@@ -16,15 +18,15 @@
 
 @keyframes card-view-glowing {
   0% {
-    box-shadow: 0 0 0 1px #007bff21;
+    box-shadow: 0 0 0 1px var(--card-glow-color);
   }
 
   50% {
-    box-shadow: 0 0 0 6px #007bff55;
+    box-shadow: 0 0 0 6px var(--card-glow-color);
   }
 
   100% {
-    box-shadow: 0 0 0 1px #007bff55;
+    box-shadow: 0 0 0 1px var(--card-glow-color);
   }
 }
 
@@ -45,7 +47,9 @@
 
 .card-view-hex {
   background: black;
-  color: white;
+  color: red;
+  border-color: red;
+  --card-glow-color: red;
 }
 
 .card-view-hex .card-view-mana-orb {

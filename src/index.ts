@@ -2,6 +2,7 @@ import { Game } from "./game";
 import { Remedy, Bolt, Augment, Burst, Hypothesis, Propel, Antithesis, Synthesis, Justify, Mystify, Purify, Amplify, Siphon, Again, Supernova, Salvation, Awaken, Obstacle, Fatigue, Confusion, Wormhole, Loop, End } from "./cards";
 import { Scrabbler } from "./monsters";
 import { init } from "./ui";
+import { StartTurnAction } from "./actions";
 
 let game = new Game();
 
@@ -35,7 +36,7 @@ game.deck = [
 
 game.monster = new Scrabbler();
 
-game.spell.cards = [];
+game.addActionBottom(new StartTurnAction());
 
 init(
   game,

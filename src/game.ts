@@ -1,5 +1,3 @@
-import { RNG } from "silmarils";
-
 export enum State {
   Drafting = "Drafting",
   Casting = "Casting",
@@ -69,6 +67,18 @@ export class Game {
     for (let callback of this.subscribers.update) {
       callback();
     }
+
+    if (this.player.health === 0) {
+      this.clearActions();
+      console.log("You died");
+      return;
+    }
+
+    if (this.monster.health === 0) {
+      this.clearActions();
+      console.log("Killed the monster");
+      return;
+    }
   }
 
   async start() {
@@ -124,8 +134,44 @@ export abstract class Card {
   abstract description: string;
   abstract cost: number;
 
+  /**
+   * A unique identifier for this card.
+   */
   uid: number;
+
+  /**
+   * The type of card.
+   */
   type = CardType.Normal;
+
+  /**
+   * A forced card cannot be removed from a spell unless it is vanishes
+   * or it is banished.
+   */
+  forced = false;
+
+  /**
+   * An anchored card can only occupy a specific position within a spell.
+   */
+  anchored = false;
+
+  /**
+   * The anchor index determines which slot within the spell this card
+   * will be positioned in if it is anchored.
+   */
+  anchorIndex?: number;
+
+  /**
+   * The highest anchor priority determines which card will be played in
+   * the hand if multiple anchored cards are forced to the same index.
+   */
+  anchorPriority?: number;
+
+  /**
+   * Dispel marks a card to be banished after it is played or the turn
+   * is over.
+   */
+  dispel = false;
 
   constructor() {
     this.uid = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);

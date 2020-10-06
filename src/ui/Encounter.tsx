@@ -1,7 +1,7 @@
 import "./Encounter.css";
 import React, { useReducer, useEffect } from "react";
 import { classNames } from "./utils";
-import { CastSpellAction } from "../actions";
+import { CastSpellAction, EndTurnAction } from "../actions";
 import { Game, Card, State } from "../game";
 import { useGameWithUpdates } from "./Context";
 import { CardView } from "./CardView";
@@ -89,6 +89,10 @@ export function EncounterScreen() {
     game.addActionTop(new CastSpellAction());
   }
 
+  function endTurn() {
+    game.addActionTop(new EndTurnAction());
+  }
+
   function toggleSpellSlot(index: number) {
     if (game.state === State.Drafting) {
       if (state.spell[index]) {
@@ -127,6 +131,7 @@ export function EncounterScreen() {
 
   let hasCards = state.spell.filter(c => c).length > 0;
   let isDrafting = game.state === State.Drafting;
+  let isCasting = game.state === State.Casting;
 
   return (
     <div className="encounter">
@@ -148,6 +153,7 @@ export function EncounterScreen() {
       <h3>Spell</h3>
       <button disabled={!isDrafting || !hasCards} onClick={cast}>Cast</button>
       <button disabled={!isDrafting || !hasCards} onClick={reset}>Clear</button>
+      <button disabled={!isCasting} onClick={endTurn}>End Turn</button>
 
       <SpellBuilder>
         {state.spell.map((card, index) => (

@@ -24,13 +24,13 @@ type EncounterActions =
 function EncounterReducer(state: EncounterState, action: EncounterActions): EncounterState {
   switch (action.type) {
     case "SET_CARDS": {
-      let cards: Card[] = Array.from({ length: 5 });
+      let cards: Card[] = Array.from({ length: 6 });
       Object.assign(cards, action.cards);
       return { ...state, spell: cards };
     }
 
     case "RESET_SPELL": {
-      let spell: Card[] = Array.from({ length: 5 });
+      let spell: Card[] = Array.from({ length: 6 });
       let hand = [...state.hand, ...state.spell].filter(c => c);
       return { ...state, spell, hand };
     }
@@ -69,7 +69,7 @@ function EncounterReducer(state: EncounterState, action: EncounterActions): Enco
 function initState(game: Game): EncounterState {
   return {
     hand: game.deck,
-    spell: Array.from({ length: 5 }),
+    spell: Array.from({ length: 6 }),
     activeCard: null,
     intentIndex: -1,
   };
@@ -85,8 +85,7 @@ export function EncounterScreen() {
   }, [game.spell.cards]);
 
   function cast() {
-    // TODO: Indexes won't match when removing slots
-    game.spell.cards = state.spell.filter(card => card);
+    game.spell.cards = state.spell;
     game.addActionTop(new CastSpellAction());
   }
 

@@ -84,27 +84,35 @@ export class PlayNextCardAction extends Action {
 
     let card = game.spell.getCurrentCard();
 
-    // Check whether the player can afford to cast this
-    if (!game.player.hasMana(card.cost)) {
-      console.log(`%cNOT ENOUGH MANA`, "color: orangered; background: pink; font-weight: bold");
-      game.addActionBottom(new EndTurnAction());
-      return;
+    if (card) {
+      // Check whether the player can afford to cast this
+      if (!game.player.hasMana(card.cost)) {
+        console.log(`%cNOT ENOUGH MANA`, "color: orangered; background: pink; font-weight: bold");
+        game.addActionBottom(new EndTurnAction());
+        return;
+      }
+
+      // Pay for the card
+      game.addActionBottom(new ModifyManaAction(-card.cost));
+
+      // Advance the casting cursor
+      game.addActionBottom(new JumpToCardAction(game.spell.cursor + 1));
+
+      // Play the card
+      game.addActionBottom(new PlayCardAction(card));
+
+      // Pause before moving to the next card
+      game.addActionBottom(new WaitAction(800));
+
+      // Play the next card
+      game.addActionBottom(new PlayNextCardAction);
+    } else {
+      // Advance the casting cursor
+      game.addActionBottom(new JumpToCardAction(game.spell.cursor + 1));
+
+      // Play the next card
+      game.addActionBottom(new PlayNextCardAction);
     }
-
-    // Pay for the card
-    game.addActionBottom(new ModifyManaAction(-card.cost));
-
-    // Advance the casting cursor
-    game.addActionBottom(new JumpToCardAction(game.spell.cursor + 1));
-
-    // Play the card
-    game.addActionBottom(new PlayCardAction(card));
-
-    // Pause before moving to the next card
-    game.addActionBottom(new WaitAction(800));
-
-    // Play the next card
-    game.addActionBottom(new PlayNextCardAction);
   }
 }
 

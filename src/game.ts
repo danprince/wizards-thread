@@ -131,6 +131,11 @@ export class Game {
     this.cursor = 0;
     // TODO: Move forced/anchored cards into the spell
   }
+
+  castSpell() {
+    this.cursor = 0;
+    this.player.resetMana();
+  }
 }
 
 export enum CardType {

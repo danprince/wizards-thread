@@ -22,7 +22,7 @@ export function Draggable<T extends DragObjectWithType>({
   }, []);
 
   let style: React.CSSProperties = {
-    opacity: isDragging ? 0 : 1
+    opacity: isDragging ? 0.1 : 1
   };
 
   return (

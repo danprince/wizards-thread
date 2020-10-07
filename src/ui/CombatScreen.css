@@ -18,13 +18,24 @@
   margin-right: 10px;
 }
 
-.spell-view-slot-empty {
+.spell-view-slot-active {
+  border-color: blue;
+  background: cyan;
 }
 
 .hand-view {
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: scroll;
+  padding: 32px;
+  max-width: 100vw;
 }
 
-.hand-view .card-view {
+.hand-view-slot {
+  margin-right: -30px;
+  transition: transform;
+}
+
+.hand-view-slot:hover {
+  z-index: 20;
+  transform: translateY(-10px) scale(1.1);
 }

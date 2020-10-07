@@ -1,9 +1,13 @@
 import "./CombatScreen.css";
 import React, { useReducer } from "react";
-import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
+import { Card, GameState } from "../game";
 import { useGame } from "./Context";
+import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
 import { CardView } from "./CardView";
-import { Card } from "../game";
+import { Orb } from "./Orbs";
+import { Box } from "./Box";
+import { CastSpellAction, EndTurnAction } from "../actions";
+import { classNames } from "./utils";
 
 type CardSource = "hand" | "spell"
 
@@ -54,36 +58,64 @@ export function CombatScreen() {
 
   return (
     <div className="combat-screen">
+      <Box flexDirection="column" marginBottom="32px" alignItems="center">
+        <Orb color="black" size="huge">{game.monster.health}/{game.monster.maxHealth}</Orb>
+        <h3>{game.monster.constructor.name}</h3>
+      </Box>
+
+      {game.state === GameState.Drafting ? (
+        <button
+          onClick={() => game.addActionBottom(new CastSpellAction())}
+        >Cast</button>
+      ) : (
+        <button
+          disabled={game.state === GameState.Reacting}
+          onClick={() => game.addActionBottom(new EndTurnAction())}
+        >End Turn</button>
+      )}
+
       <DragRenderer<DragCardItem>>
         {item => (
           <CardView card={item.card} />
         )}
       </DragRenderer>
 
-      <SpellView>
-        {game.spell.map((card, index) => (
-          <Droppable<DragCardItem>
-            key={index}
-            accept="card"
-            onDrop={({ card, source }) => onDropInSpell(card, source, index)}
-            canDrop={({ card, source }) => canDropInSpell(card, source, index)}
-          >
-            <SpellViewSlot
+      <Box justifyContent="space-between">
+        <Box flexDirection="column" alignItems="center" justifyContent="center">
+          <Orb color="cyan">{game.player.mana}</Orb>
+          <h3>Mana</h3>
+        </Box>
+
+        <SpellView>
+          {game.spell.map((card, index) => (
+            <Droppable<DragCardItem>
               key={index}
-              empty={!card}
+              accept="card"
+              onDrop={({ card, source }) => onDropInSpell(card, source, index)}
+              canDrop={({ card, source }) => canDropInSpell(card, source, index)}
             >
-              {card && (
-                <Draggable
-                  item={{ type: "card", card, source: "spell" }}
-                  disabled={card.forced && card.anchored || index === card.anchorIndex}
-                >
-                  <CardView card={card} />
-                </Draggable>
-              )}
-            </SpellViewSlot>
-          </Droppable>
-        ))}
-      </SpellView>
+              <SpellViewSlot
+                key={index}
+                active={game.state === GameState.Casting && game.cursor === index}
+              >
+                {card && (
+                  <Draggable
+                    item={{ type: "card", card, source: "spell" }}
+                    disabled={card.forced && card.anchored || index === card.anchorIndex}
+                  >
+                    <CardView card={card} />
+                  </Draggable>
+                )}
+              </SpellViewSlot>
+            </Droppable>
+          ))}
+        </SpellView>
+
+        <Box flexDirection="column" alignItems="center" justifyContent="center">
+          <Orb color="magenta">{game.player.might}</Orb>
+          <h3>Might</h3>
+        </Box>
+      </Box>
 
       <Droppable<DragCardItem>
         accept="card"
@@ -92,15 +124,20 @@ export function CombatScreen() {
       >
         <HandView>
           {game.hand.map(card => (
-            <Draggable<DragCardItem>
-              key={card.uid}
-              item={{ type: "card", card, source: "hand" }}
-            >
-              <CardView key={card.uid} card={card} />
-            </Draggable>
+            <HandViewSlot key={card.uid}>
+              <Draggable<DragCardItem>
+                item={{ type: "card", card, source: "hand" }}
+              >
+                <CardView card={card} />
+              </Draggable>
+            </HandViewSlot>
           ))}
         </HandView>
       </Droppable>
+
+      <Box flexDirection="column" alignItems="center" justifyContent="center">
+        <Orb color="red" size="large">{game.player.health}/{game.player.maxHealth}</Orb>
+      </Box>
     </div>
   );
 }
@@ -123,13 +160,18 @@ function SpellView(props: SpellViewProps) {
 
 interface SpellViewSlotProps {
   children?: React.ReactNode,
-  empty?: boolean,
+  active?: boolean,
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
-function SpellViewSlot({ empty, children, ...otherProps }: SpellViewSlotProps) {
+function SpellViewSlot({ active, children, ...otherProps }: SpellViewSlotProps) {
+  let className = classNames({
+    "spell-view-slot": true,
+    "spell-view-slot-active": active,
+  });
+
   return (
-    <div className="spell-view-slot" {...otherProps}>
+    <div className={className} {...otherProps}>
       {children}
     </div>
   );
@@ -152,5 +194,17 @@ function HandView(props: HandViewProps) {
 }
 
 /**
- * Drag and Drop Components
+ * Hand View Components
  */
+
+interface HandViewSlotProps {
+  children?: React.ReactNode,
+}
+
+function HandViewSlot(props: HandViewSlotProps) {
+  return (
+    <div className="hand-view-slot">
+      {props.children}
+    </div>
+  );
+}

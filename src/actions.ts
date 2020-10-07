@@ -38,15 +38,8 @@ export class DamageAction extends Action {
 export class CastSpellAction extends Action {
   static allowedStates = [GameState.Drafting];
 
-  constructor(public cards: Card[]) {
-    super();
-  }
-
   update(game: Game) {
-    game.player.resetMana();
-    game.resetSpell();
-    // TODO: DO this somewhere else
-    game.spell = this.cards;
+    game.castSpell();
     game.addActionBottom(new TransitionAction(GameState.Casting));
     game.addActionBottom(new WaitAction(500));
     game.addActionBottom(new PlayNextCardAction());

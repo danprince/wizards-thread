@@ -22,7 +22,7 @@ export function Draggable<T extends DragObjectWithType>({
   }, []);
 
   let style: React.CSSProperties = {
-    opacity: isDragging ? 0.1 : 1
+    opacity: isDragging ? 0 : 1
   };
 
   return (
@@ -67,18 +67,33 @@ const dragLayerStyles: React.CSSProperties = {
 }
 
 export function DragRenderer<T extends DragObjectWithType>({
-  children
+  children,
+  xAxisLock = () => false,
+  yAxisLock = () => false,
 } : {
-  children: (item: T) => React.ReactNode
+  children: (item: T) => React.ReactNode,
+  xAxisLock?: (item: T) => boolean,
+  yAxisLock?: (item: T) => boolean,
 }) {
-  let { item, isDragging, currentOffset } = useDragLayer(monitor => ({
+  let { item, isDragging, currentOffset, initialOffset } = useDragLayer(monitor => ({
     item: monitor.getItem(),
     currentOffset: monitor.getSourceClientOffset(),
+    initialOffset: monitor.getInitialSourceClientOffset(),
     isDragging: monitor.isDragging(),
   }));
 
   if (!isDragging) {
     return null;
+  }
+
+  if (item && currentOffset) {
+    if (xAxisLock(item)) {
+      currentOffset.x = initialOffset.x;
+    }
+
+    if (yAxisLock(item)) {
+      currentOffset.y = initialOffset.y;
+    }
   }
 
   let itemStyles = currentOffset ? {

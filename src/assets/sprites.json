@@ -1,0 +1,47 @@
+{ "frames": {
+   "sprites.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 1800, "h": 1800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1800, "h": 1800 },
+    "sourceSize": { "w": 1800, "h": 1800 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.17",
+  "format": "I8",
+  "size": { "w": 1800, "h": 1800 },
+  "scale": "1",
+  "slices": [
+   { "name": "card_slot", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 0, "w": 144, "h": 192 } }] },
+   { "name": "card_slot_active", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 144, "y": 0, "w": 144, "h": 192 } }] },
+   { "name": "card_face_normal", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 288, "y": 0, "w": 126, "h": 174 } }] },
+   { "name": "card_face_enemy", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 414, "y": 0, "w": 126, "h": 174 } }] },
+   { "name": "card_orb_enemy", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 6, "y": 201, "w": 33, "h": 33 } }] },
+   { "name": "card_orb_normal", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 54, "y": 201, "w": 33, "h": 33 } }] },
+   { "name": "card_orb_frame_red", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 102, "y": 201, "w": 33, "h": 33 } }] },
+   { "name": "card_orb_frame_blue", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 150, "y": 201, "w": 33, "h": 33 } }] },
+   { "name": "card_orb_frame_purple", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 198, "y": 201, "w": 33, "h": 33 } }] },
+   { "name": "card_orb_frame_gold", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 246, "y": 201, "w": 33, "h": 33 } }] },
+   { "name": "orb_red", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 96, "y": 240, "w": 48, "h": 48 } }] },
+   { "name": "orb_blue", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 144, "y": 240, "w": 48, "h": 48 } }] },
+   { "name": "orb_purple", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 192, "y": 240, "w": 48, "h": 48 } }] },
+   { "name": "orb_gold", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 240, "y": 240, "w": 48, "h": 48 } }] },
+   { "name": "icon_orb_red", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 240, "w": 18, "h": 18 } }] },
+   { "name": "icon_orb_blue", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 18, "y": 240, "w": 18, "h": 18 } }] },
+   { "name": "icon_orb_purple", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 36, "y": 240, "w": 18, "h": 18 } }] },
+   { "name": "icon_orb_gold", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 54, "y": 240, "w": 18, "h": 18 } }] },
+   { "name": "icon_anchor", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 258, "w": 18, "h": 18 } }] },
+   { "name": "card_frame_purple", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 0, "w": 126, "h": 174 } }] },
+   { "name": "card_frame_red", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 666, "y": 0, "w": 126, "h": 174 } }] },
+   { "name": "card_frame_blue", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 792, "y": 0, "w": 126, "h": 174 } }] },
+   { "name": "card_frame_gold", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 918, "y": 0, "w": 126, "h": 174 } }] },
+   { "name": "card_frame_normal", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 1044, "y": 0, "w": 126, "h": 174 } }] },
+   { "name": "icon_enemy", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 18, "y": 258, "w": 18, "h": 18 } }] },
+   { "name": "card_portrait_amplify", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 480, "w": 108, "h": 63 } }] },
+   { "name": "Slice 2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 120, "y": 480, "w": 105, "h": 54 } }] }
+  ]
+ }
+}

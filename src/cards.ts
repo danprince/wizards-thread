@@ -16,7 +16,7 @@ import {
 export class Remedy extends Card {
   id = "remedy";
   name = "Remedy";
-  description = "Heal 1 HP";
+  description = "Gain 1 $health";
   cost = 1;
 
   play(game: Game) {
@@ -38,7 +38,7 @@ export class Bolt extends Card {
 export class Augment extends Card {
   id = "augment";
   name = "Augment";
-  description = "+1 might";
+  description = "Gain 1 $might";
   cost = 1;
 
   play(game: Game) {
@@ -49,7 +49,7 @@ export class Augment extends Card {
 export class Burst extends Card {
   id = "burst";
   name = "Burst";
-  description = "Deal might damage and reset might";
+  description = "Deal $might damage.\n\nReset $might";
   cost = 2;
 
   play(game: Game) {
@@ -72,7 +72,7 @@ export class Jump extends Card {
 export class Propel extends Card {
   id = "propel";
   name = "Propel";
-  description = "Skip might cards";
+  description = "Skip $might cards";
   cost = 1;
 
   play(game: Game) {
@@ -85,7 +85,7 @@ export class Propel extends Card {
 export class Hypothesis extends Card {
   id = "hypothesis";
   name = "Hypothesis";
-  description = "If mana is even, +2 mana";
+  description = "If $mana is even:\n\nGain 2 $mana";
   cost = 1;
 
   play(game: Game) {
@@ -98,7 +98,7 @@ export class Hypothesis extends Card {
 export class Antithesis extends Card {
   id = "antithesis";
   name = "Antithesis";
-  description = "If mana is even, +2 damage";
+  description = "If $mana is even:\n\nDeal 2 damage";
   cost = 1;
 
   play(game: Game) {
@@ -111,7 +111,7 @@ export class Antithesis extends Card {
 export class Synthesis extends Card {
   id = "synthesis";
   name = "Synthesis";
-  description = "If mana is even, +2 health";
+  description = "If $mana is even:\n\nGain 2 $health";
   cost = 1;
 
   play(game: Game) {
@@ -124,7 +124,7 @@ export class Synthesis extends Card {
 export class Justify extends Card {
   id = "justify";
   name = "Justify";
-  description = "If might is even, +2 might";
+  description = "If $might is even:\n\nGain 2 $might";
   cost = 1;
 
   play(game: Game) {
@@ -135,7 +135,7 @@ export class Justify extends Card {
 export class Mystify extends Card {
   id = "mystify";
   name = "Mystify";
-  description = "If might is even, +2 mana";
+  description = "If $might is even:\n\nGain 2 $mana";
   cost = 1;
 
   play(game: Game) {
@@ -146,7 +146,7 @@ export class Mystify extends Card {
 export class Purify extends Card {
   id = "purify";
   name = "Purify";
-  description = "If might is even, +2 health";
+  description = "If $might is even:\n\nGain 2 $health";
   cost = 2;
 
   play(game: Game) {
@@ -157,7 +157,7 @@ export class Purify extends Card {
 export class Amplify extends Card {
   id = "amplify";
   name = "Amplify";
-  description = "If might is even, x2 might";
+  description = "If $might is even:\nGain 2x $might";
   cost = 3;
 
   play(game: Game) {
@@ -168,7 +168,7 @@ export class Amplify extends Card {
 export class Siphon extends Card {
   id = "siphon";
   name = "Siphon";
-  description = "Convert might to HP";
+  description = "Convert $might to $health";
   cost = 3;
 
   play(game: Game) {
@@ -181,7 +181,7 @@ export class Siphon extends Card {
 export class Again extends Card {
   id = "again";
   name = "Again";
-  description = "Play the previous card again";
+  description = "Play the *previous card* again";
   cost = 1;
 
   play(game: Game) {
@@ -192,7 +192,7 @@ export class Again extends Card {
 export class Supernova extends Card {
   id = "supernova";
   name = "Supernova";
-  description = "Deal might damage";
+  description = "Deal $might damage";
   cost = 3;
 
   play(game: Game) {
@@ -203,7 +203,7 @@ export class Supernova extends Card {
 export class Salvation extends Card {
   id = "salvation";
   name = "Salvation";
-  description = "Heal for might and reset might";
+  description = "Heal for $might\n\n Reset $might";
   cost = 3;
 
   play(game: Game) {
@@ -215,7 +215,7 @@ export class Salvation extends Card {
 export class Awaken extends Card {
   id = "awaken";
   name = "Awaken";
-  description = "Add might to mana and reset might";
+  description = "Add $might to $mana\n\n Reset $might";
   cost = 3;
 
   play(game: Game) {

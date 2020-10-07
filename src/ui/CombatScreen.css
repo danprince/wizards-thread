@@ -10,17 +10,14 @@
 }
 
 .spell-view-slot {
-  width: var(--card-width);
-  height: var(--card-height);
-  border-radius: var(--card-border-radius);
-  padding: 4px;
-  border: dashed 2px #ccc;
+  width: 144px;
+  height: 196px;
   margin-right: 10px;
 }
 
-.spell-view-slot-active {
-  border-color: black;
-  background: cyan;
+.spell-view-slot > div {
+  padding: 4px;
+  box-sizing: border-box;
 }
 
 .hand-view {
@@ -37,5 +34,5 @@
 
 .hand-view-slot:hover {
   z-index: 20;
-  transform: translateY(-10px) scale(1.1);
+  transform: translateY(-10px);
 }

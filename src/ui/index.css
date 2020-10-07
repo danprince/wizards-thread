@@ -1,5 +1,24 @@
 :root {
-  --card-width: 100px;
-  --card-height: 140px;
+  --card-width: 126px;
+  --card-height: 174px;
   --card-border-radius: 8px;
+  --font-family: dogica;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 10pt;
+  user-select: none;
+  background: #0d2757;
+}
+
+@font-face {
+  font-family: dogica;
+  src: url(/dogicapixel.ttf);
+}
+
+@font-face {
+  font-family: dogica;
+  src: url(/dogicapixelbold.ttf);
+  font-weight: bold;
 }

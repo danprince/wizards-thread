@@ -2,57 +2,42 @@
   width: var(--card-width);
   height: var(--card-height);
   border-radius: var(--card-border-radius);
-  border: solid 1px black;
-  background: white;
   box-sizing: border-box;
   padding: 4px;
   transition-property: box-shadow transform;
   position: relative;
   text-align: center;
-  --card-glow-color: black;
+  font-size: 10pt;
 }
 
-.card-view-glowing {
-  animation: 1s infinite card-view-glowing;
+.card-view-enemy {
+  color: white;
 }
 
-@keyframes card-view-glowing {
-  0% {
-    box-shadow: 0 0 0 1px var(--card-glow-color);
-  }
-
-  50% {
-    box-shadow: 0 0 0 6px var(--card-glow-color);
-  }
-
-  100% {
-    box-shadow: 0 0 0 1px var(--card-glow-color);
-  }
+.card-view-content {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.card-view-mana-orb {
+.card-view-description {
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+  font-size: 9pt;
+  line-height: 10pt;
+}
+
+.card-view-name {
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+.card-view-orb {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 25px;
-  height: 25px;
-  background: white;
-  border: solid 1px black;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translate(-50%, 20%);
-}
-
-.card-view-hex {
-  background: black;
-  color: red;
-  border-color: red;
-  --card-glow-color: red;
-}
-
-.card-view-hex .card-view-mana-orb {
-  background: red;
-  color: black;
+  transform: translate(-50%, 30%);
+  color: white;
+  font-weight: bold;
 }

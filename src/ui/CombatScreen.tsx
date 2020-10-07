@@ -4,9 +4,9 @@ import { Card, GameState } from "../game";
 import { useGame } from "./Context";
 import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
 import { CardView } from "./CardView";
-import { Orb } from "./Orb";
 import { Box } from "./Box";
 import { CastSpellAction, EndTurnAction } from "../actions";
+import { Sprite, Icon } from "./Sprite";
 import { classNames } from "./utils";
 
 type CardSource = "hand" | "spell"
@@ -59,8 +59,12 @@ export function CombatScreen() {
   return (
     <div className="combat-screen">
       <Box flexDirection="column" marginBottom="32px" alignItems="center">
-        <Orb color="black" size="huge">{game.monster.health}/{game.monster.maxHealth}</Orb>
-        <h3>{game.monster.constructor.name}</h3>
+        <Sprite name="orb_red">
+          <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
+            {game.monster.health}
+          </Box>
+        </Sprite>
+        <h3>{game.monster.name}</h3>
       </Box>
 
       {game.state === GameState.Drafting ? (
@@ -74,7 +78,7 @@ export function CombatScreen() {
         >End Turn</button>
       )}
 
-      <DragRenderer<DragCardItem>>
+      <DragRenderer<DragCardItem> yAxisLock={({ card, source }) => source === "spell" && card.forced}>
         {item => (
           <CardView card={item.card} />
         )}
@@ -82,7 +86,11 @@ export function CombatScreen() {
 
       <Box justifyContent="space-between">
         <Box flexDirection="column" alignItems="center" justifyContent="center">
-          <Orb color="cyan">{game.player.mana}</Orb>
+          <Sprite name="orb_blue">
+            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
+              {game.player.mana}
+            </Box>
+          </Sprite>
           <h3>Mana</h3>
         </Box>
 
@@ -112,7 +120,11 @@ export function CombatScreen() {
         </SpellView>
 
         <Box flexDirection="column" alignItems="center" justifyContent="center">
-          <Orb color="magenta">{game.player.might}</Orb>
+          <Sprite name="orb_purple">
+            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
+              {game.player.might}
+            </Box>
+          </Sprite>
           <h3>Might</h3>
         </Box>
       </Box>
@@ -136,7 +148,12 @@ export function CombatScreen() {
       </Droppable>
 
       <Box flexDirection="column" alignItems="center" justifyContent="center">
-        <Orb color="red" size="large">{game.player.health}/{game.player.maxHealth}</Orb>
+        <Sprite name="orb_red">
+          <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
+            {game.player.health}
+          </Box>
+        </Sprite>
+        <h3>Health</h3>
       </Box>
     </div>
   );
@@ -164,15 +181,17 @@ interface SpellViewSlotProps {
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
-function SpellViewSlot({ active, children, ...otherProps }: SpellViewSlotProps) {
+function SpellViewSlot({ active, children, ...props }: SpellViewSlotProps) {
   let className = classNames({
     "spell-view-slot": true,
     "spell-view-slot-active": active,
   });
 
   return (
-    <div className={className} {...otherProps}>
-      {children}
+    <div className={className} {...props}>
+      <Sprite name={!active ? "card_slot" : "card_slot_active"}>
+        {children}
+      </Sprite>
     </div>
   );
 }

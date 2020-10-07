@@ -211,7 +211,7 @@ export abstract class Action {
   abstract update(game: Game): any
 }
 
-export class Creature {
+export abstract class Creature {
   health: number;
   maxHealth = 10;
 
@@ -226,6 +226,9 @@ export class Creature {
   damage(amount: number) {
     this.modifyHealth(-amount);
   }
+
+  onTurnStart(game: Game) {}
+  onTurnEnd(game: Game) {}
 }
 
 export class Player extends Creature {
@@ -264,7 +267,7 @@ export class Player extends Creature {
 export abstract class Monster extends Creature {
   abstract health = 20;
   abstract maxHealth = 20;
-  abstract attackDamage: number;
+  abstract name: string;
 
-  abstract update(game: Game): any;
+  update(game: Game): any {}
 }

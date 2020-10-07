@@ -1,5 +1,5 @@
-import "./Orbs.css";
-import React from "react";
+import "./Orb.css";
+import React, { useRef } from "react";
 
 export function Orb({
   children,
@@ -10,12 +10,18 @@ export function Orb({
   color?: string,
   size?: "small" | "medium" | "large" | "huge"
 }) {
+  let ref = useRef<HTMLDivElement>();
+
   let style = {
     "--orb-color": color
   };
 
   return (
-    <div className={`orb orb-color-${color} orb-size-${size}`} style={style as any}>
+    <div
+      ref={ref}
+      className={`orb orb-color-${color} orb-size-${size}`}
+      style={style as any}
+    >
       {children}
     </div>
   );

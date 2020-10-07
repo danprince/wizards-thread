@@ -4,7 +4,7 @@ import { Card, GameState } from "../game";
 import { useGame } from "./Context";
 import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
 import { CardView } from "./CardView";
-import { Orb } from "./Orbs";
+import { Orb } from "./Orb";
 import { Box } from "./Box";
 import { CastSpellAction, EndTurnAction } from "../actions";
 import { classNames } from "./utils";

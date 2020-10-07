@@ -9,6 +9,7 @@
   box-sizing: border-box;
   padding-bottom: 6px;
   position: relative;
+  transition: transform;
 }
 
 .orb-size-small {
@@ -33,4 +34,8 @@
   font-size: 20pt;
   width: 96px;
   height: 96px;
+}
+
+.orb-flash-on {
+  transform: scale(1.3);
 }

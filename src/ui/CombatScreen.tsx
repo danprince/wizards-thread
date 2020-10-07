@@ -6,7 +6,7 @@ import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
 import { CardView } from "./CardView";
 import { Box } from "./Box";
 import { CastSpellAction, EndTurnAction } from "../actions";
-import { Sprite, Icon } from "./Sprite";
+import { Sprite } from "./Sprite";
 import { classNames } from "./utils";
 
 type CardSource = "hand" | "spell"
@@ -38,7 +38,7 @@ export function CombatScreen() {
   // Cards can't be dropped into the spell if there's already a card
   // there.
   function canDropInSpell(card: Card, source: CardSource, index: number) {
-    if (card.anchored && card.anchorIndex !== index) {
+    if (card.anchored) {
       return false;
     }
 
@@ -109,7 +109,7 @@ export function CombatScreen() {
                 {card && (
                   <Draggable
                     item={{ type: "card", card, source: "spell" }}
-                    disabled={card.forced && card.anchored || index === card.anchorIndex}
+                    disabled={card.forced && card.anchored}
                   >
                     <CardView card={card} />
                   </Draggable>

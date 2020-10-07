@@ -171,24 +171,6 @@ export abstract class Card {
    */
   anchored = false;
 
-  /**
-   * The anchor index determines which slot within the spell this card
-   * will be positioned in if it is anchored.
-   */
-  anchorIndex?: number;
-
-  /**
-   * The highest anchor priority determines which card will be played in
-   * the hand if multiple anchored cards are forced to the same index.
-   */
-  anchorPriority?: number;
-
-  /**
-   * Dispel marks a card to be banished after it is played or the turn
-   * is over.
-   */
-  dispel = false;
-
   constructor() {
     this.uid = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
   }

@@ -11,17 +11,22 @@ export function Draggable<T extends DragObjectWithType>({
   disabled?: boolean,
   children?: React.ReactNode,
 }) {
-  let [, ref, setPreviewImage] = useDrag({
+  let [{ isDragging }, ref, setPreviewImage] = useDrag({
     item,
     canDrag: () => !disabled,
+    collect: monitor => ({ isDragging: monitor.isDragging() })
   });
 
   useEffect(() => {
     setPreviewImage(getEmptyImage(), { captureDraggingState: true });
   }, []);
 
+  let style: React.CSSProperties = {
+    opacity: isDragging ? 0 : 1
+  };
+
   return (
-    <div className="draggable" ref={ref}>
+    <div className="draggable" ref={ref} style={style}>
       {children}
     </div>
   );

@@ -1,4 +1,5 @@
-import { Game, Card, Action, Creature, State } from "./game";
+import { Game, Card, Action, Creature, GameState } from "./game";
+import { RNG } from "silmarils";
 
 export class WaitAction extends Action {
   constructor(public duration: number) {
@@ -11,7 +12,7 @@ export class WaitAction extends Action {
 }
 
 export class HealAction extends Action {
-  static allowedStates = [State.Casting, State.Reacting];
+  static allowedStates = [GameState.Casting, GameState.Reacting];
 
   constructor(public target: Creature, public amount: number) {
     super();
@@ -23,7 +24,7 @@ export class HealAction extends Action {
 }
 
 export class DamageAction extends Action {
-  static allowedStates = [State.Casting, State.Reacting];
+  static allowedStates = [GameState.Casting, GameState.Reacting];
 
   constructor(public target: Creature, public amount: number) {
     super();
@@ -35,7 +36,7 @@ export class DamageAction extends Action {
 }
 
 export class CastSpellAction extends Action {
-  static allowedStates = [State.Drafting];
+  static allowedStates = [GameState.Drafting];
 
   constructor(public cards: Card[]) {
     super();
@@ -43,16 +44,17 @@ export class CastSpellAction extends Action {
 
   update(game: Game) {
     game.player.resetMana();
-    game.spell.reset();
-    game.spell.cards = this.cards;
-    game.addActionBottom(new TransitionAction(State.Casting));
+    game.resetSpell();
+    // TODO: DO this somewhere else
+    game.spell = this.cards;
+    game.addActionBottom(new TransitionAction(GameState.Casting));
     game.addActionBottom(new WaitAction(500));
     game.addActionBottom(new PlayNextCardAction());
   }
 }
 
 export class TransitionAction extends Action {
-  constructor(public state: State) {
+  constructor(public state: GameState) {
     super();
   }
 
@@ -62,15 +64,18 @@ export class TransitionAction extends Action {
 }
 
 export class StartTurnAction extends Action {
+  static allowedStates = [GameState.Initializing, GameState.Reacting];
+
   update(game: Game) {
-    game.addActionBottom(new TransitionAction(State.Drafting));
+    game.addActionBottom(new TransitionAction(GameState.Drafting));
+    game.resetSpell();
   }
 }
 
 export class EndTurnAction extends Action {
   update(game: Game) {
     game.clearActions();
-    game.addActionBottom(new TransitionAction(State.Reacting));
+    game.addActionBottom(new TransitionAction(GameState.Reacting));
     game.addActionBottom(new WaitAction(800));
     game.monster.update(game);
     game.addActionBottom(new WaitAction(800));
@@ -79,15 +84,15 @@ export class EndTurnAction extends Action {
 }
 
 export class PlayNextCardAction extends Action {
-  static allowedStates = [State.Casting];
+  static allowedStates = [GameState.Casting];
 
   update(game: Game) {
-    if (game.spell.isFinished()) {
+    if (game.isSpellFinished()) {
       game.addActionBottom(new EndTurnAction());
       return;
     }
 
-    let card = game.spell.getCurrentCard();
+    let card = game.getCurrentCard();
 
     if (card) {
       // Check whether the player can afford to cast this
@@ -101,7 +106,7 @@ export class PlayNextCardAction extends Action {
       game.addActionBottom(new ModifyManaAction(-card.cost));
 
       // Advance the casting cursor
-      game.addActionBottom(new JumpToCardAction(game.spell.cursor + 1));
+      game.addActionBottom(new JumpToCardAction(game.cursor + 1));
 
       // Play the card
       game.addActionBottom(new PlayCardAction(card));
@@ -113,7 +118,7 @@ export class PlayNextCardAction extends Action {
       game.addActionBottom(new PlayNextCardAction);
     } else {
       // Advance the casting cursor
-      game.addActionBottom(new JumpToCardAction(game.spell.cursor + 1));
+      game.addActionBottom(new JumpToCardAction(game.cursor + 1));
 
       // Play the next card
       game.addActionBottom(new PlayNextCardAction);
@@ -122,7 +127,7 @@ export class PlayNextCardAction extends Action {
 }
 
 export class PlayCardAction extends Action {
-  static allowedStates = [State.Casting];
+  static allowedStates = [GameState.Casting];
 
   constructor(public card: Card) {
     super();
@@ -132,13 +137,13 @@ export class PlayCardAction extends Action {
     console.groupCollapsed(`%cPLAY%c ${this.card.name}`, "color: blue; background: lightcyan; font-weight: bold", "font-weight: bold");
     console.log(this.card);
     this.card.play(game);
-    game.spell.previousCardPlayed = this.card;
+    game.previousCardPlayed = this.card;
     console.groupEnd();
   }
 }
 
 export class JumpToCardAction extends Action {
-  static allowedStates = [State.Casting];
+  static allowedStates = [GameState.Casting];
 
   constructor(public index: number) {
     super();
@@ -228,14 +233,14 @@ export class ResetMightAction extends Action {
 
 export class ShuffleSpellAction extends Action {
   update(game: Game) {
-    game.spell.shuffle();
+    RNG.shuffle(game.spell);
   }
 }
 
 export class LoopAction extends Action {
   update(game: Game) {
-    for (let cursor = game.spell.cursor; cursor >= 0; cursor--) {
-      let card = game.spell.cards[cursor];
+    for (let cursor = game.cursor; cursor >= 0; cursor--) {
+      let card = game.spell[cursor];
 
       if (card && card.id === "loop") {
         game.addActionTop(new JumpToCardAction(cursor));

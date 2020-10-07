@@ -2,7 +2,7 @@ import "./Encounter.css";
 import React, { useReducer, useEffect } from "react";
 import { classNames } from "./utils";
 import { CastSpellAction, EndTurnAction } from "../actions";
-import { Game, Card, State } from "../game";
+import { Game, Card, GameState } from "../game";
 import { useGameWithUpdates } from "./Context";
 import { CardView } from "./CardView";
 
@@ -81,8 +81,8 @@ export function EncounterScreen() {
   let [state, dispatch] = useReducer(EncounterReducer, game, initState);
 
   useEffect(() => {
-    dispatch({ type: "SET_CARDS", cards: game.spell.cards });
-  }, [game.spell.cards]);
+    dispatch({ type: "SET_CARDS", cards: game.spell });
+  }, [game.spell]);
 
   function cast() {
     game.addActionTop(new CastSpellAction(state.spell));
@@ -95,7 +95,7 @@ export function EncounterScreen() {
   function toggleSpellSlot(index: number) {
     let card = state.spell[index];
 
-    if (game.state === State.Drafting) {
+    if (game.state === GameState.Drafting) {
       if (card) {
         dispatch({ type: "REMOVE_CARD", index });
       } else if (state.activeCard) {
@@ -107,7 +107,7 @@ export function EncounterScreen() {
   }
 
   function setActiveCard(card: Card) {
-    if (game.state === State.Drafting) {
+    if (game.state === GameState.Drafting) {
       if (!(state.activeCard && state.activeCard.forced)) {
         dispatch({ type: "SET_ACTIVE_CARD", card });
       }
@@ -115,29 +115,28 @@ export function EncounterScreen() {
   }
 
   function setIntentSlot(index: number) {
-    if (game.state === State.Drafting) {
+    if (game.state === GameState.Drafting) {
       dispatch({ type: "SET_INTENT_SLOT", index });
     }
   }
 
   function reset() {
-    if (game.state === State.Drafting) {
+    if (game.state === GameState.Drafting) {
       dispatch({ type: "RESET_SPELL" });
     }
   }
 
   function isActiveCard(card: Card) {
-    return game.state === State.Drafting && card === state.activeCard;
+    return game.state === GameState.Drafting && card === state.activeCard;
   }
 
   function isCurrentCard(card: Card) {
-    return game.state === State.Casting && card === game.spell.getCurrentCard();
+    return game.state === GameState.Casting && card === game.spell.getCurrentCard();
   }
 
   let hasCards = state.spell.filter(c => c).length > 0;
-  let isDrafting = game.state === State.Drafting;
-  let isCasting = game.state === State.Casting;
-  let isReacting = game.state === State.Reacting;
+  let isDrafting = game.state === GameState.Drafting;
+  let isReacting = game.state === GameState.Reacting;
 
   return (
     <div className="encounter">
@@ -173,7 +172,7 @@ export function EncounterScreen() {
             {card ? (
               <CardView card={card} glowing={isCurrentCard(card)}/>
             ) : (
-              <SpellBuilderSlotEmpty glowing={game.state === State.Drafting && state.activeCard && (state.activeCard.anchorIndex === undefined || state.activeCard.anchorIndex === index)}>
+              <SpellBuilderSlotEmpty glowing={game.state === GameState.Drafting && state.activeCard && (state.activeCard.anchorIndex === undefined || state.activeCard.anchorIndex === index)}>
                 {(
                   index === state.intentIndex &&
                   state.activeCard &&
@@ -220,7 +219,7 @@ export function HandSlot({ children, onClick }) {
 /**
  *
  */
-export function SpellBuilder({ children }) {
+function SpellBuilder({ children }) {
   return (
     <div className="spell-builder">
       {children}
@@ -228,7 +227,7 @@ export function SpellBuilder({ children }) {
   );
 }
 
-export function SpellBuilderSlot({ children, onClick }) {
+function SpellBuilderSlot({ children, onClick }) {
   return (
     <div className="spell-builder-slot" onClick={onClick}>
       {children}
@@ -236,7 +235,7 @@ export function SpellBuilderSlot({ children, onClick }) {
   );
 }
 
-export function SpellBuilderSlotEmpty({ glowing, children = null }) {
+function SpellBuilderSlotEmpty({ glowing, children = null }) {
   return (
     <div
       className={classNames({

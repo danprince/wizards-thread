@@ -1,19 +1,25 @@
-export enum State {
+export enum GameState {
+  Initializing = "Initializing",
   Drafting = "Drafting",
   Casting = "Casting",
   Reacting = "Reacting",
 }
 
 export class Game {
+  state: GameState = GameState.Initializing;
   player = new Player();
   monster: Monster;
-  spell = new Spell();
   deck: Card[] = [];
-  state: State = State.Drafting;
+
+  spell: Card[] = [];
+  hand: Card[] = [];
+  cursor: number = 0;
+
+  previousCardPlayed: Card;
 
   private actions: Action[] = [];
 
-  transition(state: State) {
+  transition(state: GameState) {
     this.state = state;
     console.log(`%cTRANSITION%c ${state}`, "color: blueviolet; background: lavender; font-weight: bold", "");
   }
@@ -88,38 +94,42 @@ export class Game {
     }
   }
 
-  setCastingIndex(index: number) {
-    this.spell.cursor = index;
+  addToSpell(card: Card, index: number) {
+    if (this.spell[index] === undefined) {
+      this.spell[index] = card;
+    }
   }
-}
 
-export class Spell {
-  cards: Card[] = [];
-  cursor: number = 0;
-  previousCardPlayed: Card = null;
+  addToHand(card: Card) {
+    this.hand.push(card);
+  }
+
+  removeFromHand(card: Card) {
+    this.hand.splice(this.hand.indexOf(card), 1);
+  }
+
+  removeFromSpell(card: Card) {
+    let index = this.spell.indexOf(card);
+    this.spell[index] = undefined;
+  }
+
+  setCastingIndex(index: number) {
+    this.cursor = index;
+  }
+
+  isSpellFinished() {
+    return this.cursor >= this.spell.length;
+  }
 
   getCurrentCard(): Card {
-    return this.cards[this.cursor];
+    return this.spell[this.cursor];
   }
 
-  isFinished() {
-    return this.cursor >= this.cards.length;
-  }
-
-  reset() {
+  resetSpell() {
+    this.spell = Array.from({ length: 6 });
+    this.hand = [...this.deck];
     this.cursor = 0;
-  }
-
-  shuffle() {
-    let cards: Card[] = [];
-
-    for (let i = 0; i < this.cards.length; i++) {
-      let j = Math.floor(Math.random() * this.cards.length);
-      cards[i] = this.cards[j];
-      cards[j] = this.cards[i];
-    }
-
-    this.cards = cards;
+    // TODO: Move forced/anchored cards into the spell
   }
 }
 
@@ -181,7 +191,7 @@ export abstract class Card {
 }
 
 export abstract class Action {
-  static readonly allowedStates?: State[]
+  static readonly allowedStates?: GameState[]
   readonly type: string;
 
   get allowedStates() {

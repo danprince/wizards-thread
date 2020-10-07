@@ -1,0 +1,30 @@
+.combat-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spell-view {
+  display: flex;
+  margin: 32px;
+}
+
+.spell-view-slot {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-border-radius);
+  padding: 4px;
+  border: dashed 2px #ccc;
+  margin-right: 10px;
+}
+
+.spell-view-slot-empty {
+}
+
+.hand-view {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hand-view .card-view {
+}

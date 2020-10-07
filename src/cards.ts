@@ -65,7 +65,7 @@ export class Jump extends Card {
   cost = 1;
 
   play(game: Game) {
-    game.addActionTop(new JumpToCardAction(game.spell.cursor + 1));
+    game.addActionTop(new JumpToCardAction(game.cursor + 1));
   }
 }
 
@@ -185,7 +185,7 @@ export class Again extends Card {
   cost = 1;
 
   play(game: Game) {
-    game.addActionTop(new PlayCardAction(game.spell.previousCardPlayed));
+    game.addActionTop(new PlayCardAction(game.previousCardPlayed));
   }
 }
 
@@ -269,7 +269,7 @@ export class Wormhole extends Card {
   forced = true;
 
   play(game: Game) {
-    let cursor = Math.floor(Math.random() * game.spell.cards.length);
+    let cursor = Math.floor(Math.random() * game.spell.length);
     game.addActionTop(new JumpToCardAction(cursor));
   }
 }

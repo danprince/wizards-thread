@@ -141,6 +141,7 @@ export class Game {
 export enum CardType {
   Normal = "normal",
   Hex = "hex",
+  Enemy = "enemy",
 }
 
 export abstract class Card {

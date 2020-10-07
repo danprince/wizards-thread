@@ -62,6 +62,7 @@ export class StartTurnAction extends Action {
   update(game: Game) {
     game.addActionBottom(new TransitionAction(GameState.Drafting));
     game.resetSpell();
+    game.monster.onTurnStart(game);
   }
 }
 
@@ -70,7 +71,7 @@ export class EndTurnAction extends Action {
     game.clearActions();
     game.addActionBottom(new TransitionAction(GameState.Reacting));
     game.addActionBottom(new WaitAction(800));
-    game.monster.update(game);
+    game.monster.onTurnEnd(game);
     game.addActionBottom(new WaitAction(800));
     game.addActionBottom(new StartTurnAction());
   }

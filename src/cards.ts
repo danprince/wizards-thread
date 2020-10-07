@@ -293,3 +293,16 @@ export class End extends Card {
     game.addActionTop(new LoopAction());
   }
 }
+
+export class WretchedClaws extends Card {
+  id = "wretched-claws"
+  name = "Wretched Claws"
+  description = "Slash you for 3 damage"
+  cost = 0
+  type = CardType.Enemy
+  forced = true
+
+  play(game: Game) {
+    game.addActionTop(new DamageAction(game.player, 3));
+  }
+}

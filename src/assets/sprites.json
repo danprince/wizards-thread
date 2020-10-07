@@ -41,7 +41,18 @@
    { "name": "card_frame_normal", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 1044, "y": 0, "w": 126, "h": 174 } }] },
    { "name": "icon_enemy", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 18, "y": 258, "w": 18, "h": 18 } }] },
    { "name": "card_portrait_amplify", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 480, "w": 108, "h": 63 } }] },
-   { "name": "Slice 2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 120, "y": 480, "w": 105, "h": 54 } }] }
+   { "name": "card_portrait_remedy", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 108, "y": 480, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_hypothesis", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 543, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_bolt", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 216, "y": 480, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_augment", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 324, "y": 480, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_burst", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 432, "y": 480, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_propel", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 480, "w": 108, "h": 63 } }] },
+   { "name": "Slice 3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 606, "w": 108, "h": 63 } }] },
+   { "name": "Slice 4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 216, "y": 543, "w": 108, "h": 63 } }] },
+   { "name": "Slice 5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 324, "y": 543, "w": 108, "h": 63 } }] },
+   { "name": "Slice 6", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 432, "y": 543, "w": 108, "h": 63 } }] },
+   { "name": "Slice 7", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 543, "w": 108, "h": 63 } }] },
+   { "name": "Slice 8", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 108, "y": 543, "w": 108, "h": 63 } }] }
   ]
  }
 }

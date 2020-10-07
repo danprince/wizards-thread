@@ -144,11 +144,18 @@ export enum CardType {
   Enemy = "enemy",
 }
 
+export enum CardRarity {
+  Common = "common",
+  Uncommon = "uncommon",
+  Rare = "rare",
+}
+
 export abstract class Card {
   abstract id: string;
   abstract name: string;
   abstract description: string;
   abstract cost: number;
+  rarity = CardRarity.Common;
 
   /**
    * A unique identifier for this card.

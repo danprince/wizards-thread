@@ -1,6 +1,6 @@
 import "./CardView.css";
 import React, { useMemo } from "react";
-import { Card, CardType } from "../game";
+import { Card, CardType, CardRarity } from "../game";
 import { Sprite, Icon } from "./Sprite";
 import { classNames } from "./utils";
 import { Box } from "./Box";
@@ -12,6 +12,33 @@ interface CardViewProps {
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
+function getFrameSprite(card: Card) {
+  switch (card.type) {
+    case CardType.Enemy:
+    case CardType.Hex:
+      return "card_frame_red";
+  }
+
+  switch (card.rarity) {
+    case CardRarity.Uncommon:
+      return "card_frame_blue";
+    case CardRarity.Rare:
+      return "card_frame_gold";
+  }
+
+  return "card_frame_normal";
+}
+
+function getFaceSprite(card: Card) {
+  switch (card.type) {
+    case CardType.Enemy:
+    case CardType.Hex:
+      return "card_face_enemy";
+  }
+
+  return "card_face_normal";
+}
+
 export function CardView({ card, glowing, ...rest }: CardViewProps) {
   let className = classNames({
     "card-view": true,
@@ -20,8 +47,8 @@ export function CardView({ card, glowing, ...rest }: CardViewProps) {
 
   return (
     <div className={className} {...rest}>
-      <Sprite name={card.type === CardType.Normal ? "card_face_normal" : "card_face_enemy"}>
-        <Sprite name={card.type === CardType.Normal ? "card_frame_normal" : "card_frame_red"}>
+      <Sprite name={getFaceSprite(card)}>
+        <Sprite name={getFrameSprite(card)}>
           <div className="card-view-content">
             <Sprite className="card-view-portrait" name={`card_portrait_${card.id}`} />
             <div className="card-view-name">{card.name}</div>

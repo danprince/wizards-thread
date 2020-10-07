@@ -1,4 +1,4 @@
-import { Game, Card, CardType } from "./game";
+import { Game, Card, CardType, CardRarity } from "./game";
 
 import {
   HealAction,
@@ -85,7 +85,7 @@ export class Propel extends Card {
 export class Hypothesis extends Card {
   id = "hypothesis";
   name = "Hypothesis";
-  description = "If $mana is even:\n\nGain 2 $mana";
+  description = "If $mana is even:\nGain 2 $mana";
   cost = 1;
 
   play(game: Game) {
@@ -98,7 +98,7 @@ export class Hypothesis extends Card {
 export class Antithesis extends Card {
   id = "antithesis";
   name = "Antithesis";
-  description = "If $mana is even:\n\nDeal 2 damage";
+  description = "If $mana is even:\nDeal 2 damage";
   cost = 1;
 
   play(game: Game) {
@@ -111,7 +111,7 @@ export class Antithesis extends Card {
 export class Synthesis extends Card {
   id = "synthesis";
   name = "Synthesis";
-  description = "If $mana is even:\n\nGain 2 $health";
+  description = "If $mana is even:\nGain 2 $health";
   cost = 1;
 
   play(game: Game) {
@@ -124,7 +124,7 @@ export class Synthesis extends Card {
 export class Justify extends Card {
   id = "justify";
   name = "Justify";
-  description = "If $might is even:\n\nGain 2 $might";
+  description = "If $might is even:\nGain 2 $might";
   cost = 1;
 
   play(game: Game) {
@@ -135,7 +135,7 @@ export class Justify extends Card {
 export class Mystify extends Card {
   id = "mystify";
   name = "Mystify";
-  description = "If $might is even:\n\nGain 2 $mana";
+  description = "If $might is even:\nGain 2 $mana";
   cost = 1;
 
   play(game: Game) {
@@ -146,7 +146,7 @@ export class Mystify extends Card {
 export class Purify extends Card {
   id = "purify";
   name = "Purify";
-  description = "If $might is even:\n\nGain 2 $health";
+  description = "If $might is even:\nGain 2 $health";
   cost = 2;
 
   play(game: Game) {
@@ -159,6 +159,7 @@ export class Amplify extends Card {
   name = "Amplify";
   description = "If $might is even:\nGain 2x $might";
   cost = 3;
+  rarity = CardRarity.Rare;
 
   play(game: Game) {
     game.addActionTop(new MultiplyMightAction(2));
@@ -203,7 +204,7 @@ export class Supernova extends Card {
 export class Salvation extends Card {
   id = "salvation";
   name = "Salvation";
-  description = "Heal for $might\n\n Reset $might";
+  description = "Heal for $might\n Reset $might";
   cost = 3;
 
   play(game: Game) {
@@ -215,7 +216,7 @@ export class Salvation extends Card {
 export class Awaken extends Card {
   id = "awaken";
   name = "Awaken";
-  description = "Add $might to $mana\n\n Reset $might";
+  description = "Add $might to $mana\n Reset $might";
   cost = 3;
 
   play(game: Game) {

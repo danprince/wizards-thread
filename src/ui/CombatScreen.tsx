@@ -1,4 +1,3 @@
-import "./CombatScreen.css";
 import React, { useReducer } from "react";
 import { Card, GameState } from "../game";
 import { useGame } from "./Context";
@@ -7,7 +6,8 @@ import { CardView } from "./CardView";
 import { Box } from "./Box";
 import { CastSpellAction, EndTurnAction } from "../actions";
 import { Sprite } from "./Sprite";
-import { classNames } from "./utils";
+import { SpellView, SpellViewSlot } from "./SpellView";
+import { HandView, HandViewSlot } from "./HandView";
 import { Button } from "./Button";
 
 type CardSource = "hand" | "spell"
@@ -59,7 +59,7 @@ export function CombatScreen() {
   }
 
   return (
-    <div className="combat-screen">
+    <Box className="combat-screen" flexDirection="column" alignItems="center">
       <Box justifyContent="space-between" width="800px">
         <Box flexDirection="column" alignItems="center">
           <Sprite name="creature_portrait_wizard" />
@@ -171,80 +171,6 @@ export function CombatScreen() {
           ))}
         </HandView>
       </Droppable>
-    </div>
-  );
-}
-
-/**
- * Spell Builder Components
- */
-
-interface SpellViewProps {
-  children?: React.ReactNode,
-}
-
-function SpellView(props: SpellViewProps) {
-  return (
-    <div className="spell-view">
-      {props.children}
-    </div>
-  );
-}
-
-interface SpellViewSlotProps {
-  children?: React.ReactNode,
-  active?: boolean,
-  hover?: boolean,
-  onClick?: React.MouseEventHandler<HTMLDivElement>
-}
-
-function SpellViewSlot({ active, hover, children, ...props }: SpellViewSlotProps) {
-  let className = classNames({
-    "spell-view-slot": true,
-    "spell-view-slot-active": active,
-  });
-
-  let sprite = "card_slot";
-  if (active) sprite = "card_slot_active";
-  if (hover) sprite = "card_slot_hover";
-
-  return (
-    <div className={className} {...props}>
-      <Sprite name={sprite}>
-        {children}
-      </Sprite>
-    </div>
-  );
-}
-
-/**
- * Hand View Components
- */
-
-interface HandViewProps {
-  children?: React.ReactNode,
-}
-
-function HandView(props: HandViewProps) {
-  return (
-    <div className="hand-view">
-      {props.children}
-    </div>
-  );
-}
-
-/**
- * Hand View Components
- */
-
-interface HandViewSlotProps {
-  children?: React.ReactNode,
-}
-
-function HandViewSlot(props: HandViewSlotProps) {
-  return (
-    <div className="hand-view-slot">
-      {props.children}
-    </div>
+    </Box>
   );
 }

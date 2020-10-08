@@ -1,0 +1,14 @@
+.spell-view {
+  display: flex;
+}
+
+.spell-view-slot {
+  width: 144px;
+  height: 196px;
+  margin-right: 10px;
+}
+
+.spell-view-slot > div {
+  padding: 4px;
+  box-sizing: border-box;
+}

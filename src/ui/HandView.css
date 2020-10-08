@@ -1,0 +1,34 @@
+.hand-view {
+  display: flex;
+  overflow-x: scroll;
+  padding: 32px;
+  max-width: 90vw;
+}
+
+.hand-view-slot {
+  margin-right: -30px;
+  transition: transform;
+}
+
+.hand-view-slot .card-view {
+  transition: 50ms transform;
+}
+
+.hand-view-slot:hover .card-view {
+  z-index: 20;
+  transform: translateY(-10px);
+}
+
+.hand-view .hand-view-slot {
+  animation: 600ms slide-in;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateY(300px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

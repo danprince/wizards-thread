@@ -2,7 +2,6 @@ export enum GameState {
   Initializing = "Initializing",
   Drafting = "Drafting",
   Casting = "Casting",
-  Reacting = "Reacting",
 }
 
 export class Game {

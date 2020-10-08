@@ -16,7 +16,6 @@ function App() {
       return <LoadingScreen />;
     case GameState.Drafting:
     case GameState.Casting:
-    case GameState.Reacting:
       return <CombatScreen />;
     default:
       return null;

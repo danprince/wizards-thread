@@ -12,7 +12,7 @@ export class WaitAction extends Action {
 }
 
 export class HealAction extends Action {
-  static allowedStates = [GameState.Casting, GameState.Reacting];
+  static allowedStates = [GameState.Casting];
 
   constructor(public target: Creature, public amount: number) {
     super();
@@ -24,7 +24,7 @@ export class HealAction extends Action {
 }
 
 export class DamageAction extends Action {
-  static allowedStates = [GameState.Casting, GameState.Reacting];
+  static allowedStates = [GameState.Casting];
 
   constructor(public target: Creature, public amount: number) {
     super();
@@ -57,7 +57,7 @@ export class TransitionAction extends Action {
 }
 
 export class StartTurnAction extends Action {
-  static allowedStates = [GameState.Initializing, GameState.Reacting];
+  static allowedStates = [GameState.Initializing];
 
   update(game: Game) {
     game.addActionBottom(new TransitionAction(GameState.Drafting));
@@ -69,8 +69,6 @@ export class StartTurnAction extends Action {
 export class EndTurnAction extends Action {
   update(game: Game) {
     game.clearActions();
-    game.addActionBottom(new TransitionAction(GameState.Reacting));
-    game.addActionBottom(new WaitAction(800));
     game.monster.onTurnEnd(game);
     game.addActionBottom(new WaitAction(800));
     game.addActionBottom(new StartTurnAction());

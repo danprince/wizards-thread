@@ -4,7 +4,7 @@ import { useGame } from "./Context";
 import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
 import { CardView } from "./CardView";
 import { Box } from "./Box";
-import { CastSpellAction, EndTurnAction } from "../actions";
+import { CastSpellAction } from "../actions";
 import { Sprite } from "./Sprite";
 import { SpellView, SpellViewSlot } from "./SpellView";
 import { HandView, HandViewSlot } from "./HandView";
@@ -108,15 +108,10 @@ export function CombatScreen() {
         </Box>
       </Box>
 
-      {game.state === GameState.Drafting ? (
+      {game.state === GameState.Drafting && (
         <Button
           onClick={() => game.addActionBottom(new CastSpellAction())}
         >Cast</Button>
-      ) : (
-        <Button
-          disabled={game.state === GameState.Reacting}
-          onClick={() => game.addActionBottom(new EndTurnAction())}
-        >End Turn</Button>
       )}
 
       <DragRenderer<DragCardItem> yAxisLock={({ card, source }) => source === "spell" && card.forced}>

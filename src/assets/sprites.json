@@ -67,7 +67,8 @@
    { "name": "card_portrait_fatigue", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 606, "w": 108, "h": 63 } }] },
    { "name": "card_portrait_supernova", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 324, "y": 669, "w": 108, "h": 63 } }] },
    { "name": "card_portrait_salvation", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 432, "y": 669, "w": 108, "h": 63 } }] },
-   { "name": "card_portrait_wretched_claws", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 669, "w": 108, "h": 63 } }] }
+   { "name": "card_portrait_wretched_claws", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 669, "w": 108, "h": 63 } }] },
+   { "name": "card_orb_hex", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 534, "y": 390, "w": 33, "h": 33 } }] }
   ]
  }
 }

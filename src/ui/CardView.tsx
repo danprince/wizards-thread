@@ -41,6 +41,17 @@ function getFaceSprite(card: Card) {
   return "card_face_normal";
 }
 
+function getOrbSprite(card: Card) {
+  switch (card.type) {
+    case CardType.Hex:
+      return "card_orb_hex";
+    case CardType.Enemy:
+      return "card_orb_enemy";
+  }
+
+  return "card_orb_normal";
+}
+
 export function CardView({ card, glowing, ...rest }: CardViewProps) {
   let className = classNames({
     "card-view": true,
@@ -60,7 +71,7 @@ export function CardView({ card, glowing, ...rest }: CardViewProps) {
 
             <Sprite
               className="card-view-orb"
-              name={card.type === CardType.Normal ? "card_orb_normal" : "card_orb_enemy"}
+              name={getOrbSprite(card)}
             >
               <Sprite name="card_orb_frame_blue" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Box justifyContent="center" alignItems="center">
@@ -96,11 +107,11 @@ function CardDescriptionText({ card }: { card: Card }) {
     }
 
     if (token.type === "em") {
-      return <em>{token.value}</em>;
+      return <strong>{token.value}</strong>;
     }
 
     if (token.type === "num") {
-      return <big>{token.value}</big>;
+      return <strong>{token.value}</strong>;
     }
 
     if (token.type === "var") {

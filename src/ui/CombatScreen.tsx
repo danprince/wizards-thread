@@ -60,47 +60,64 @@ export function CombatScreen() {
 
   return (
     <div className="combat-screen">
-      <Box padding="64px 0">
-        {game.state === GameState.Drafting ? (
-          <Button
-            onClick={() => game.addActionBottom(new CastSpellAction())}
-          >Cast</Button>
-        ) : (
-          <Button
-            disabled={game.state === GameState.Reacting}
-            onClick={() => game.addActionBottom(new EndTurnAction())}
-          >End Turn</Button>
-        )}
+      <Box justifyContent="space-between" width="800px">
+        <Box flexDirection="column" alignItems="center">
+          <Sprite name="creature_portrait_wizard" />
+          <Box justifyContent="space-between">
+            <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
+              <Sprite name="orb_red">
+                <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
+                  {game.player.health}
+                </Box>
+              </Sprite>
+              <h4>Health</h4>
+            </Box>
+
+            <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
+              <Sprite name="orb_blue">
+                <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
+                  {game.player.mana}
+                </Box>
+              </Sprite>
+              <h4>Mana</h4>
+            </Box>
+
+            <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
+              <Sprite name="orb_purple">
+                <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
+                  {game.player.might}
+                </Box>
+              </Sprite>
+              <h4>Might</h4>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box flexDirection="column" alignItems="center">
+          <Sprite name="creature_portrait_scrabbler" />
+          <Box justifyContent="space-between">
+            <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
+              <Sprite name="orb_red">
+                <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
+                  {game.monster.health}
+                </Box>
+              </Sprite>
+              <h4>Health</h4>
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
-      <Box justifyContent="space-between">
-        <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
-          <Sprite name="orb_red">
-            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
-              {game.player.health}
-            </Box>
-          </Sprite>
-          <h4>Health</h4>
-        </Box>
-
-        <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
-          <Sprite name="orb_blue">
-            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
-              {game.player.mana}
-            </Box>
-          </Sprite>
-          <h4>Mana</h4>
-        </Box>
-
-        <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
-          <Sprite name="orb_purple">
-            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
-              {game.player.might}
-            </Box>
-          </Sprite>
-          <h4>Might</h4>
-        </Box>
-      </Box>
+      {game.state === GameState.Drafting ? (
+        <Button
+          onClick={() => game.addActionBottom(new CastSpellAction())}
+        >Cast</Button>
+      ) : (
+        <Button
+          disabled={game.state === GameState.Reacting}
+          onClick={() => game.addActionBottom(new EndTurnAction())}
+        >End Turn</Button>
+      )}
 
       <DragRenderer<DragCardItem> yAxisLock={({ card, source }) => source === "spell" && card.forced}>
         {item => (
@@ -123,7 +140,7 @@ export function CombatScreen() {
                 {card && (
                   <Draggable
                     item={{ type: "card", card, source: "spell" }}
-                    disabled={card.forced && card.anchored}
+                    disabled={(card.forced && card.anchored) || game.state !== GameState.Drafting}
                   >
                     <CardView card={card} />
                   </Draggable>
@@ -142,6 +159,7 @@ export function CombatScreen() {
           {game.hand.map(card => (
             <HandViewSlot key={card.uid}>
               <Draggable<DragCardItem>
+                disabled={game.state !== GameState.Drafting}
                 item={{ type: "card", card, source: "hand" }}
               >
                 <CardView card={card} />

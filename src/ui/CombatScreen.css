@@ -31,7 +31,11 @@
   transition: transform;
 }
 
-.hand-view-slot:hover {
+.hand-view-slot .card-view {
+  transition: 50ms transform;
+}
+
+.hand-view-slot:hover .card-view {
   z-index: 20;
   transform: translateY(-10px);
 }

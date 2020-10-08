@@ -33,8 +33,7 @@ export function SpellViewSlot({ active, hover, children, ...props }: SpellViewSl
   });
 
   let sprite = "card_slot";
-  if (active) sprite = "card_slot_active";
-  if (hover) sprite = "card_slot_hover";
+  if (active || hover) sprite = "card_slot_active";
 
   return (
     <div className={className} {...props}>

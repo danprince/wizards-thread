@@ -61,7 +61,13 @@
    { "name": "card_portrait_end", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 216, "y": 606, "w": 108, "h": 63 } }] },
    { "name": "card_portrait_obstacle", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 324, "y": 606, "w": 108, "h": 63 } }] },
    { "name": "card_portrait_wormhole", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 432, "y": 606, "w": 108, "h": 63 } }] },
-   { "name": "Slice 5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 606, "w": 108, "h": 63 } }] }
+   { "name": "card_portrait_confused", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 669, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_siphon", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 108, "y": 669, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_again", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 216, "y": 669, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_fatigue", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 606, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_supernova", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 324, "y": 669, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_salvation", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 432, "y": 669, "w": 108, "h": 63 } }] },
+   { "name": "card_portrait_wretched_claws", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 540, "y": 669, "w": 108, "h": 63 } }] }
   ]
  }
 }

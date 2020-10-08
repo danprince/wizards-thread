@@ -1,5 +1,5 @@
 import { Game } from "./game";
-import { Remedy, Bolt, Augment, Burst, Hypothesis, Propel, Antithesis, Synthesis, Justify, Mystify, Purify, Amplify, Siphon, Again, Supernova, Salvation, Awaken, Obstacle, Fatigue, Confusion, Wormhole, Loop, End } from "./cards";
+import { Remedy, Bolt, Augment, Burst, Hypothesis, Propel, Antithesis, Synthesis, Justify, Mystify, Purify, Amplify, Siphon, Again, Supernova, Salvation, Awaken, Obstacle, Fatigue, Confused, Wormhole, Loop, End } from "./cards";
 import { Scrabbler } from "./monsters";
 import { init } from "./ui";
 import { StartTurnAction } from "./actions";
@@ -28,7 +28,7 @@ game.deck = [
   new Awaken,
   new Obstacle,
   new Fatigue,
-  new Confusion,
+  new Confused,
   new Wormhole,
   new Loop,
   new End,

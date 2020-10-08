@@ -247,9 +247,9 @@ export class Fatigue extends Card {
   play() {}
 }
 
-export class Confusion extends Card {
-  id = "confusion";
-  name = "Confusion";
+export class Confused extends Card {
+  id = "confused";
+  name = "Confused";
   description = "Shuffle the spell and continue";
   cost = 0;
   type = CardType.Hex;
@@ -295,7 +295,7 @@ export class End extends Card {
 }
 
 export class WretchedClaws extends Card {
-  id = "wretched-claws"
+  id = "wretched_claws"
   name = "Wretched Claws"
   description = "Slash you for 3 damage"
   cost = 0

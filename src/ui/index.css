@@ -14,6 +14,7 @@ body {
   background-repeat: no-repeat;
   image-rendering: pixelated;
   color: white;
+  overscroll-behavior: none;
 }
 
 @font-face {

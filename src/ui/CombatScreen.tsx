@@ -60,16 +60,18 @@ export function CombatScreen() {
 
   return (
     <div className="combat-screen">
-      {game.state === GameState.Drafting ? (
-        <Button
-          onClick={() => game.addActionBottom(new CastSpellAction())}
-        >Cast</Button>
-      ) : (
-        <Button
-          disabled={game.state === GameState.Reacting}
-          onClick={() => game.addActionBottom(new EndTurnAction())}
-        >End Turn</Button>
-      )}
+      <Box padding="64px 0">
+        {game.state === GameState.Drafting ? (
+          <Button
+            onClick={() => game.addActionBottom(new CastSpellAction())}
+          >Cast</Button>
+        ) : (
+          <Button
+            disabled={game.state === GameState.Reacting}
+            onClick={() => game.addActionBottom(new EndTurnAction())}
+          >End Turn</Button>
+        )}
+      </Box>
 
       <Box justifyContent="space-between">
         <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">

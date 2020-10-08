@@ -72,7 +72,8 @@
    { "name": "card_slot_hover", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 672, "y": 192, "w": 144, "h": 192 } }] },
    { "name": "icon_card", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 276, "w": 18, "h": 18 } }] },
    { "name": "icon_card_enemy", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 18, "y": 276, "w": 18, "h": 18 } }] },
-   { "name": "icon_card_hex", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 36, "y": 276, "w": 18, "h": 18 } }] }
+   { "name": "icon_card_hex", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 36, "y": 276, "w": 18, "h": 18 } }] },
+   { "name": "card_portrait_begone", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 732, "w": 108, "h": 63 } }] }
   ]
  }
 }

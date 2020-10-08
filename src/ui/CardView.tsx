@@ -15,8 +15,9 @@ interface CardViewProps {
 function getFrameSprite(card: Card) {
   switch (card.type) {
     case CardType.Enemy:
-    case CardType.Hex:
       return "card_frame_red";
+    case CardType.Hex:
+      return "card_frame_green";
   }
 
   switch (card.rarity) {
@@ -32,8 +33,9 @@ function getFrameSprite(card: Card) {
 function getFaceSprite(card: Card) {
   switch (card.type) {
     case CardType.Enemy:
-    case CardType.Hex:
       return "card_face_enemy";
+    case CardType.Hex:
+      return "card_face_hex";
   }
 
   return "card_face_normal";
@@ -73,6 +75,9 @@ export function CardView({ card, glowing, ...rest }: CardViewProps) {
               )}
               {card.type === CardType.Enemy && (
                 <Sprite name="icon_enemy" />
+              )}
+              {card.type === CardType.Hex && (
+                <Sprite name="icon_hex" />
               )}
             </Box>
           </div>

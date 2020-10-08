@@ -2,6 +2,7 @@ import { Game, Monster } from "./game";
 import { WretchedClaws } from "./cards";
 
 export class Scrabbler extends Monster {
+  id = "scrabbler";
   name = "Scrabbler";
   maxHealth = 20;
   health = 20;

@@ -49,7 +49,7 @@ export class Augment extends Card {
 export class Burst extends Card {
   id = "burst";
   name = "Burst";
-  description = "Deal $might damage.\n\nReset $might";
+  description = "Do $might damage.\nReset $might";
   cost = 2;
 
   play(game: Game) {
@@ -98,7 +98,7 @@ export class Hypothesis extends Card {
 export class Antithesis extends Card {
   id = "antithesis";
   name = "Antithesis";
-  description = "If $mana is even:\nDeal 2 damage";
+  description = "If $mana is even:\nDo 2 dmg";
   cost = 1;
 
   play(game: Game) {
@@ -231,8 +231,7 @@ export class Obstacle extends Card {
   description = "The spell ends here";
   cost = 99;
   type = CardType.Hex;
-  anchored = true;
-  anchorIndex = 3;
+  forced = true;
 
   play() {}
 }
@@ -264,7 +263,7 @@ export class Confusion extends Card {
 export class Wormhole extends Card {
   id = "wormhole";
   name = "Wormhole";
-  description = "Continue the spell from a random card";
+  description = "Jump to a random card";
   cost = 1;
   type = CardType.Hex;
   forced = true;

@@ -5,8 +5,8 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Game, GameState } from "../game";
 import { GameProvider, useGameWithUpdates } from "./Context";
-//import { EncounterScreen } from "./Encounter";
 import { CombatScreen } from "./CombatScreen";
+import cityBackgroundSrc from "../assets/city.png";
 
 function App() {
   let game = useGameWithUpdates();
@@ -58,3 +58,7 @@ export function init(game: Game, element: HTMLElement) {
     element,
   );
 }
+
+// TODO: Figure out why I can't do this through CSS (vite not resolving
+// the image src).
+document.body.style.backgroundImage = `url(${cityBackgroundSrc})`;

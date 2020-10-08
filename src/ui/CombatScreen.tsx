@@ -6,8 +6,9 @@ import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
 import { CardView } from "./CardView";
 import { Box } from "./Box";
 import { CastSpellAction, EndTurnAction } from "../actions";
-import { Sprite } from "./Sprite";
+import { Sprite, Icon } from "./Sprite";
 import { classNames } from "./utils";
+import { Button } from "./Button";
 
 type CardSource = "hand" | "spell"
 
@@ -20,7 +21,8 @@ interface DragCardItem {
 export function CombatScreen() {
   let game = useGame();
 
-  // Hack to keep the component in sync with the game when it mutates
+  // FIXME: Keep the component in sync with the game when it mutates.
+  // Need the game to dispatch events that let the UI know to update.
   let [_, forceUpdate] = useReducer(x => x + 1, 0);
 
   // Only cards being moved from the spell can be dropped into the hand
@@ -58,41 +60,51 @@ export function CombatScreen() {
 
   return (
     <div className="combat-screen">
-      <Box flexDirection="column" marginBottom="32px" alignItems="center">
-        <Sprite name="orb_red">
-          <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
-            {game.monster.health}
-          </Box>
-        </Sprite>
-        <h3>{game.monster.name}</h3>
-      </Box>
-
       {game.state === GameState.Drafting ? (
-        <button
+        <Button
           onClick={() => game.addActionBottom(new CastSpellAction())}
-        >Cast</button>
+        >Cast</Button>
       ) : (
-        <button
+        <Button
           disabled={game.state === GameState.Reacting}
           onClick={() => game.addActionBottom(new EndTurnAction())}
-        >End Turn</button>
+        >End Turn</Button>
       )}
+
+      <Box justifyContent="space-between">
+        <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
+          <Sprite name="orb_red">
+            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
+              {game.player.health}
+            </Box>
+          </Sprite>
+          <h4>Health</h4>
+        </Box>
+
+        <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
+          <Sprite name="orb_blue">
+            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
+              {game.player.mana}
+            </Box>
+          </Sprite>
+          <h4>Mana</h4>
+        </Box>
+
+        <Box flexDirection="column" alignItems="center" justifyContent="center" margin="8px">
+          <Sprite name="orb_purple">
+            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%" textShadow="0 2px black">
+              {game.player.might}
+            </Box>
+          </Sprite>
+          <h4>Might</h4>
+        </Box>
+      </Box>
 
       <DragRenderer<DragCardItem> yAxisLock={({ card, source }) => source === "spell" && card.forced}>
         {item => (
           <CardView card={item.card} />
         )}
       </DragRenderer>
-
-      <Box justifyContent="space-between">
-        <Box flexDirection="column" alignItems="center" justifyContent="center">
-          <Sprite name="orb_blue">
-            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
-              {game.player.mana}
-            </Box>
-          </Sprite>
-          <h3>Mana</h3>
-        </Box>
 
         <SpellView>
           {game.spell.map((card, index) => (
@@ -119,16 +131,6 @@ export function CombatScreen() {
           ))}
         </SpellView>
 
-        <Box flexDirection="column" alignItems="center" justifyContent="center">
-          <Sprite name="orb_purple">
-            <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
-              {game.player.might}
-            </Box>
-          </Sprite>
-          <h3>Might</h3>
-        </Box>
-      </Box>
-
       <Droppable<DragCardItem>
         accept="card"
         canDrop={({ card, source }) => canDropInHand(card, source)}
@@ -146,15 +148,6 @@ export function CombatScreen() {
           ))}
         </HandView>
       </Droppable>
-
-      <Box flexDirection="column" alignItems="center" justifyContent="center">
-        <Sprite name="orb_red">
-          <Box justifyContent="center" alignItems="center" color="white" fontWeight="bold" height="100%">
-            {game.player.health}
-          </Box>
-        </Sprite>
-        <h3>Health</h3>
-      </Box>
     </div>
   );
 }

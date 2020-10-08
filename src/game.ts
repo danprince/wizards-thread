@@ -256,6 +256,7 @@ export class Player extends Creature {
 export abstract class Monster extends Creature {
   abstract health = 20;
   abstract maxHealth = 20;
+  abstract id: string;
   abstract name: string;
 
   update(game: Game): any {}

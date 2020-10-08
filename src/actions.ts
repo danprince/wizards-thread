@@ -98,25 +98,21 @@ export class PlayNextCardAction extends Action {
 
       // Pay for the card
       game.addActionBottom(new ModifyManaAction(-card.cost));
+    }
 
-      // Advance the casting cursor
-      game.addActionBottom(new JumpToCardAction(game.cursor + 1));
+    // Advance the casting cursor
+    game.addActionBottom(new JumpToCardAction(game.cursor + 1));
 
+    if (card) {
       // Play the card
       game.addActionBottom(new PlayCardAction(card));
-
-      // Pause before moving to the next card
-      game.addActionBottom(new WaitAction(800));
-
-      // Play the next card
-      game.addActionBottom(new PlayNextCardAction);
-    } else {
-      // Advance the casting cursor
-      game.addActionBottom(new JumpToCardAction(game.cursor + 1));
-
-      // Play the next card
-      game.addActionBottom(new PlayNextCardAction);
     }
+
+    // Pause before moving to the next card
+    game.addActionBottom(new WaitAction(800));
+
+    // Play the next card
+    game.addActionBottom(new PlayNextCardAction);
   }
 }
 

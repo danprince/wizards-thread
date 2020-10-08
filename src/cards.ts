@@ -182,7 +182,7 @@ export class Siphon extends Card {
 export class Again extends Card {
   id = "again";
   name = "Again";
-  description = "Play the *previous card* again";
+  description = "Play the previous card again";
   cost = 1;
 
   play(game: Game) {

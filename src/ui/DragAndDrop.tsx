@@ -32,6 +32,11 @@ export function Draggable<T extends DragObjectWithType>({
   );
 }
 
+interface DroppableChildProps {
+  canDrop: boolean,
+  isOver: boolean,
+}
+
 export function Droppable<T extends DragObjectWithType>({
   accept,
   canDrop = () => true,
@@ -41,17 +46,21 @@ export function Droppable<T extends DragObjectWithType>({
   accept: string,
   canDrop?: (item: T) => boolean,
   onDrop?: (item: T) => any,
-  children: React.ReactNode,
+  children: React.ReactNode | ((props: DroppableChildProps) => React.ReactNode),
 }) {
-  let [, ref] = useDrop<T, any, any>({
+  let [droppableProps, ref] = useDrop<T, any, any>({
     accept: accept,
     canDrop: item => canDrop(item),
     drop: item => onDrop(item),
+    collect: (monitor): DroppableChildProps => ({
+      canDrop: monitor.canDrop(),
+      isOver: monitor.isOver(),
+    })
   });
 
   return (
     <div className="droppable" ref={ref}>
-      {children}
+      {typeof children === "function" ? children(droppableProps) : children}
     </div>
   );
 }

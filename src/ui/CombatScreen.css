@@ -39,3 +39,17 @@
   z-index: 20;
   transform: translateY(-10px);
 }
+
+.hand-view .hand-view-slot {
+  animation: 600ms slide-in;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateY(300px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

@@ -6,7 +6,7 @@ import { Draggable, Droppable, DragRenderer } from "./DragAndDrop";
 import { CardView } from "./CardView";
 import { Box } from "./Box";
 import { CastSpellAction, EndTurnAction } from "../actions";
-import { Sprite, Icon } from "./Sprite";
+import { Sprite } from "./Sprite";
 import { classNames } from "./utils";
 import { Button } from "./Button";
 
@@ -23,7 +23,7 @@ export function CombatScreen() {
 
   // FIXME: Keep the component in sync with the game when it mutates.
   // Need the game to dispatch events that let the UI know to update.
-  let [_, forceUpdate] = useReducer(x => x + 1, 0);
+  let [, forceUpdate] = useReducer(x => x + 1, 0);
 
   // Only cards being moved from the spell can be dropped into the hand
   // Forced cards can't be removed from the spell.
@@ -125,17 +125,19 @@ export function CombatScreen() {
         )}
       </DragRenderer>
 
-        <SpellView>
-          {game.spell.map((card, index) => (
-            <Droppable<DragCardItem>
-              key={index}
-              accept="card"
-              onDrop={({ card, source }) => onDropInSpell(card, source, index)}
-              canDrop={({ card, source }) => canDropInSpell(card, source, index)}
-            >
+      <SpellView>
+        {game.spell.map((card, index) => (
+          <Droppable<DragCardItem>
+            key={index}
+            accept="card"
+            onDrop={({ card, source }) => onDropInSpell(card, source, index)}
+            canDrop={({ card, source }) => canDropInSpell(card, source, index)}
+          >
+            {({ canDrop, isOver }) => (
               <SpellViewSlot
                 key={index}
                 active={game.state === GameState.Casting && game.cursor === index}
+                hover={game.state === GameState.Drafting && isOver && canDrop}
               >
                 {card && (
                   <Draggable
@@ -146,9 +148,10 @@ export function CombatScreen() {
                   </Draggable>
                 )}
               </SpellViewSlot>
-            </Droppable>
-          ))}
-        </SpellView>
+            )}
+          </Droppable>
+        ))}
+      </SpellView>
 
       <Droppable<DragCardItem>
         accept="card"
@@ -191,18 +194,23 @@ function SpellView(props: SpellViewProps) {
 interface SpellViewSlotProps {
   children?: React.ReactNode,
   active?: boolean,
+  hover?: boolean,
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
-function SpellViewSlot({ active, children, ...props }: SpellViewSlotProps) {
+function SpellViewSlot({ active, hover, children, ...props }: SpellViewSlotProps) {
   let className = classNames({
     "spell-view-slot": true,
     "spell-view-slot-active": active,
   });
 
+  let sprite = "card_slot";
+  if (active) sprite = "card_slot_active";
+  if (hover) sprite = "card_slot_hover";
+
   return (
     <div className={className} {...props}>
-      <Sprite name={!active ? "card_slot" : "card_slot_active"}>
+      <Sprite name={sprite}>
         {children}
       </Sprite>
     </div>

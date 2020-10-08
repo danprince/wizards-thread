@@ -9,12 +9,23 @@ body {
   font-family: var(--font-family);
   font-size: 10pt;
   user-select: none;
-  background: #261c51;
+  background-color: #120e24;
   background-size: cover;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   color: white;
   overscroll-behavior: none;
+  animation: 3s background-slide-in;
+}
+
+@keyframes background-slide-in {
+  from {
+    background-position: 0 -100px;
+  }
+
+  to {
+    background-position: 0 0;
+  }
 }
 
 @font-face {

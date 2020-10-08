@@ -12,3 +12,11 @@
   padding: 4px;
   box-sizing: border-box;
 }
+
+.spell-view-slot .card-view {
+  transition: 300ms transform;
+}
+
+.spell-view-slot-active .card-view {
+  transform: translateY(-30px);
+}

@@ -239,3 +239,18 @@ export class LoopAction extends Action {
     }
   }
 }
+
+export class BanishCardAction extends Action {
+  constructor(public index: number) {
+    super();
+  }
+
+  update(game: Game) {
+    let card = game.spell[this.index];
+
+    if (card) {
+      game.removeFromSpell(card)
+      game.addToEther(card);
+    }
+  }
+}

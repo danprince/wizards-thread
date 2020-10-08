@@ -11,6 +11,7 @@ import {
   ShuffleSpellAction,
   LoopAction,
   PlayCardAction,
+  BanishCardAction,
 } from "./actions";
 
 export class Remedy extends Card {
@@ -304,5 +305,17 @@ export class WretchedClaws extends Card {
 
   play(game: Game) {
     game.addActionTop(new DamageAction(game.player, 3));
+  }
+}
+
+export class Begone extends Card {
+  id = "begone"
+  name = "Begone"
+  description = "Banish the next card"
+  cost = 1
+
+  play(game: Game) {
+    // Cursor is already over next card ready for the next turn
+    game.addActionTop(new BanishCardAction(game.cursor));
   }
 }

@@ -13,6 +13,7 @@ export class Game {
 
   spell: Card[] = [];
   hand: Card[] = [];
+  ether: Card[] = [];
   cursor: number = 0;
 
   previousCardPlayed: Card;
@@ -102,6 +103,10 @@ export class Game {
 
   addToHand(card: Card) {
     this.hand.push(card);
+  }
+
+  addToEther(card: Card) {
+    this.ether.push(card);
   }
 
   removeFromHand(card: Card) {

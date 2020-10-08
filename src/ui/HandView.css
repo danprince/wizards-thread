@@ -5,6 +5,10 @@
   max-width: 90vw;
 }
 
+.hand-view::-webkit-scrollbar {
+  display: none;
+}
+
 .hand-view-slot {
   margin-right: -30px;
   transition: transform;
